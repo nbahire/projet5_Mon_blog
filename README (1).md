@@ -204,13 +204,13 @@ ___
 2. Start the application :
 
     ```sh
-    docker-compose up -d
+    docker compose up -d
     ```
 
     **Please wait this might take a several minutes...**
 
     ```sh
-    docker-compose logs -f # Follow log output
+    docker compose logs -f # Follow log output
     ```
 
 3. Open your favorite browser :

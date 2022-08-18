@@ -198,7 +198,7 @@ ___
 1. Copying the composer configuration file : 
 
     ```sh
-    cp web/app/composer.json.dist web/app/composer.json
+    cp web/app/composer.json.dist .web/composer.json
     ```
 
 2. Start the application :

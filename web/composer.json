@@ -1,0 +1,12 @@
+{
+    "require": {
+        "twig/twig": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Acme\\": "app/src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

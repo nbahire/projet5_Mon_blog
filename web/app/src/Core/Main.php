@@ -4,9 +4,17 @@ namespace App\Acme\Core;
 
 use App\Acme\Controllers\Controller;
 use App\Acme\Controllers\MainController;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class Main extends Controller
 {
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function start(): void
     {
         session_start();

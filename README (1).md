@@ -137,7 +137,7 @@ cd docker-nginx-php-mysql
     │       ├── FooTest.php
     │       └── bootstrap.php
     └── public
-        └── index.php
+        └── index.html.twig
 ```
 
 ___
@@ -222,7 +222,7 @@ ___
 4. Stop and clear services
 
     ```sh
-    docker-compose down -v
+    docker compose down -v
     ```
 
 ___

@@ -22,8 +22,14 @@ class MainController extends Controller
         //On va chercher tous les posts
         $posts = $postsModel->findBy(['']);
         $post = $posts[0];
-        //On genere la vue
-        $this->twig->display('main/index.html.twig');
+
+        $session = false;
+        if(isset($_SESSION['user'] )&& $_SESSION['user']['roles'] === 'ROLE_ADMIN'){
+             $session = true;
+        }
+        var_dump($session);
+        $this->twig->display('main/index.html.twig',compact('post'));
+        $this->twig->display('base.html.twig', compact('session'));
     }
 
     /**

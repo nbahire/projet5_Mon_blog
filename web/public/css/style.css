@@ -1,0 +1,487 @@
+
+@font-face {
+    font-family: 'HelveticaNeueLTPro-Md';
+    src: url('fonts/HelveticaNeueLTPro-Md.eot?#iefix') format('embedded-opentype'),
+    url('fonts/HelveticaNeueLTPro-Md.otf')  format('opentype'),
+    url('fonts/HelveticaNeueLTPro-Md.woff') format('woff'),
+    url('fonts/HelveticaNeueLTPro-Md.ttf')  format('truetype'),
+    url('fonts/HelveticaNeueLTPro-Md.svg#HelveticaNeueLTPro-Md') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    color: #2f2f2f;
+    min-height:100vh;
+    font-family: 'HelveticaNeueLTPro-Md';
+}
+html{
+    position: relative;
+    min-height: 100%;
+    scroll-behavior: smooth;
+
+}
+
+/*--------------------------------------------------------------
+# Links
+--------------------------------------------------------------*/
+a {
+    color: royalblue;
+}
+
+a:visited {
+    color: purple;
+}
+
+a:hover, a:focus, a:active {
+    color: midnightblue;
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
+a:hover, a:active {
+    outline: 0;
+    list-style: none;
+}
+
+/*--------------------------------------------------------------
+# Helper Utilities
+--------------------------------------------------------------*/
+.flex {
+    display: flex !important;
+}
+
+@media screen and (min-width: 992px) {
+    .flex-lg {
+        display: flex !important;
+    }
+}
+
+/*--------------------------------------------------------------
+# Outer Container
+--------------------------------------------------------------*/
+@media screen and (min-width: 1200px) {
+    .outer-container {
+        width: calc(100% - 90px);
+        margin: 0 auto;
+    }
+}
+
+
+/*
+# Site Branding
+--------------------------------*/
+.site-title {
+    margin-top: 100px;
+    font-size: 72px;
+}
+
+.site-title a {
+    color: #2f2f2f;
+    text-decoration: none;
+}
+
+.site-description {
+    width: 284px;
+    margin: -5px 0 0;
+    font-size: 10px;
+    letter-spacing: 0.26rem;
+    color: #9d9d9d;
+    text-transform: uppercase;
+    text-align: right;
+}
+.entry-div{
+    margin: 50px 0px 50px 0px;
+}
+.entry-div a {
+    color: #EFEFEF;
+}
+@media screen and (min-width: 576px){
+    .site-title {
+        font-size: 112px;
+
+    }
+
+    .site-description {
+        width: 284px;
+        margin: -10px 0 0;
+    }
+}
+
+/*--------------------------------------------------------------
+# Homepage
+--------------------------------------------------------------*/
+.single-page {
+    padding-top: 165px;
+    flex: 1;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgb(83, 81, 81);
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+
+}
+.content-wrap{
+    border-radius: 20px;
+    padding: 5px;
+}
+.single-page .content-wrap {
+    margin-top: 100px;
+    text-align: center;
+    color: #423f3f;
+}
+
+.single-page .content-wrap .posted-date {
+    font-size: 12px;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+}
+
+.single-page .content-wrap .entry-title {
+    margin-top: 12px;
+    font-size: 50px;
+    color: #2f2f2f;
+}
+
+
+
+.single-page .content-wrap .entry-content {
+    margin-top: 36px;
+}
+
+.single-page .content-wrap .entry-content p {
+    font-size: 14px;
+    line-height: 2rem;
+    text-align: left;
+}
+
+.single-page .content-wrap .entry-footer {
+    margin-top: 50px;
+}
+
+.post-share,
+.comments-count a {
+    color: red;
+}
+.post-comments,
+.form-reg {
+    margin-top: 20%;
+}
+.form-reg h2 {
+    text-align: center;
+
+}
+
+.content-wrap a.read-more {
+    display: block;
+    width: 150px;
+    padding: 15px 0;
+    border-radius: 10px;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1;
+    background: #2f2f2f;
+}
+.content-wrap a.read-more:hover {
+    background: #2f2f2fa1;
+    text-decoration: none;
+}
+
+.comments-count {
+    font-size: 16px;
+    text-align: left;
+}
+
+.comments-count a {
+    color: #afafaf;
+}
+
+@media screen and (min-width: 992px){
+    .single-page {
+        padding-top: 0;
+    }
+
+    .content-wrap a.read-more {
+        margin-top: 0;
+    }
+
+    .comments-count {
+        text-align: right;
+    }
+
+    .post-share,
+    .comments-count {
+        width: calc(50% - 100px);
+    }
+}
+/*--------------------------------------------------------------
+# Page Header
+--------------------------------------------------------------*/
+.page-header {
+    height: 385px;
+    margin-top: 20px;
+    background-size: cover;
+}
+
+.page-header h1 {
+    font-size: 72px;
+    font-family: 'BeyondTheMountains';
+    color: rgb(63, 61, 61);
+}
+
+
+
+/*
+# Comments
+--------------------------------*/
+.comment-body{
+    padding: 10px 0 10px 5px;
+    border-bottom : 1px solid rgb(145, 134, 134);
+    border-radius: 5px;
+    background-color: #EFEFEF;
+}
+.btn-signal{
+    border: none;
+    border-radius: 5px;
+}
+.post-comments h3 {
+    font-size: 24px;
+
+}
+
+.comment-list {
+    padding: 0;
+    margin: 20px 0 0 20px;
+    list-style: none;
+}
+
+.comment-list .comment {
+    margin-bottom: 40px;
+}
+
+.comment-list .comment:nth-last-of-type(1) {
+    margin-bottom: 0;
+}
+
+.comment-author-avatar {
+    width: 64px;
+    height: 10px;
+    margin-right: 20px;
+    color: red;
+
+}
+
+.comment-author-avatar img {
+    width: 100%;
+    border-radius: 50%;
+
+
+}
+
+.comment-wrap {
+    width: calc(100% - 84px);
+}
+
+.comment-author a {
+    line-height: 1;
+    color: #2f2f2f;
+}
+
+.comment-author .fn a,
+.comment-author .comment-meta a {
+    padding-right: 15px;
+    margin-right: 15px;
+    border-right: 2px solid #2f2f2f;
+}
+
+.comment-wrap p {
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.85rem;
+    color: #424141;
+}
+
+.comment-reply-title {
+    font-size: 24px;
+}
+
+.comments-form {
+    margin-top: 75px;
+}
+
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="password"],
+.comment-form textarea {
+    display: block;
+    width: 100%;
+    padding: 20px 32px;
+    margin-bottom: 8px;
+    border: 0;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1;
+    color: #aeaeae;
+    background: #efefef;
+    outline: none;
+}
+
+.comment-form input[type="submit"],
+.comment-form button[type="submit"] {
+    display: block;
+    width: 150px;
+    padding: 15px 0;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 0;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1;
+    background: #2f2f2f;
+}
+@media screen and (min-width: 992px){
+    .comment-author-avatar {
+        width: 100px;
+        margin-right: 42px;
+    }
+
+    .comment-wrap {
+        width: calc(100% - 145px);
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 5px 0 5px 0;
+    background-color: #343A40;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+#notfound {
+    position: relative;
+    height: 100vh;
+}
+
+#notfound .notfound {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.notfound {
+    max-width: 520px;
+    width: 100%;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.notfound .notfound-404 {
+    position: relative;
+    height: 200px;
+    margin: 0px auto 20px;
+    z-index: -1;
+}
+
+.notfound .notfound-404 h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 236px;
+    font-weight: 200;
+    margin: 0px;
+    color: #211b19;
+    text-transform: uppercase;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.notfound .notfound-404 h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #211b19;
+    background: #fff;
+    padding: 10px 5px;
+    margin: auto;
+    display: inline-block;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+}
+
+.notfound a {
+    font-family: 'Montserrat', sans-serif;
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 13px 23px;
+    background: #ff6300;
+    font-size: 18px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+}
+.table-striped {
+    margin: 10px 0px 50px 0px;
+}
+.entry-div-page{
+    margin-top: 100px;
+}
+.last-chap{
+    margin-top: 100px;
+}
+
+.notfound a:hover {
+    color: #ff6300;
+    background: #211b19;
+}
+
+@media only screen and (max-width: 767px) {
+    .notfound .notfound-404 h1 {
+        font-size: 148px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .notfound .notfound-404 {
+        height: 148px;
+        margin: 0px auto 10px;
+    }
+    .notfound .notfound-404 h1 {
+        font-size: 86px;
+    }
+    .notfound .notfound-404 h2 {
+        font-size: 16px;
+    }
+    .notfound a {
+        padding: 7px 15px;
+        font-size: 14px;
+    }
+    .site-title {
+        font-size: 60px;
+        margin-top: 100px;
+    }
+    .single-page {
+        padding-top: 50px;
+    }
+    .single-page .content-wrap .entry-title{
+        font-size: 40px;
+    }
+}
+
+

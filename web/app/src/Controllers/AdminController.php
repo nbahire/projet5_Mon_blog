@@ -53,21 +53,21 @@ class AdminController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function addChapiter()
+    public function addChapter()
     {
         if ($this->isAdmin()) {
             $postModel = new PostsModel;
             if (!empty($_POST['titre']) && !empty($_POST['description'])) {
 
-                $addChapiter = $postModel->setTitre(htmlentities($_POST['titre']))
+                $addChapter = $postModel->setTitre(htmlentities($_POST['titre']))
                     ->setDescription(htmlentities($_POST['description']))
                     ->setContenu($_POST['contenu']);
-                $postModel->create($addChapiter);
+                $postModel->create($addChapter);
                 //On envoie a la vue 
                 header('location: /admin');
-                $this->twig->display('admin/addChapiter.html.twig', compact('addChapiter'));
+                $this->twig->display('admin/addChapter.html.twig', compact('addChapter'));
             }
-            $this->twig->display('admin/addChapiter.html.twig', []);
+            $this->twig->display('admin/addChapter.html.twig', []);
         }
     }
 
@@ -76,7 +76,7 @@ class AdminController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function modifyChapiter($id)
+    public function modifyChapter($id)
     {
         if ($this->isAdmin()) {
 
@@ -93,9 +93,9 @@ class AdminController extends Controller
                 // On enregistre
                 $postModif->update();
                 header('Location: /posts/lire/' . $post->id);
-                $this->twig->display('admin/modifyChapiter.html.twig', compact('post', 'postModif'), 'admin');
+                $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'postModif'));
             }
-            $this->twig->display('admin/modifyChapiter.html.twig', compact('post'), 'admin');
+            $this->twig->display('admin/modifyChapter.html.twig', compact('post'));
         }
     }
     /**

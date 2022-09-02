@@ -37,13 +37,13 @@
                                 {{ post.created_at }}
                             </div><!-- .posted-date -->
 
-                            <h2 class="entry-title"> {{ post.titre }}</h2>
+                            <h2 class="entry-title"> {{ post.titre|raw  }}</h2>
 
                         </header><!-- .entry-header -->
 
 
                         <div class="entry-content">
-                            <p>{{ post.description }}</p>
+                            <p>{{ post.description|raw  }}</p>
                         </div><!-- .entry-content -->
 
                         <footer class="entry-footer flex flex-column flex-lg-row justify-content-end align-content-start align-lg-items-center">

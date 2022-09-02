@@ -15,19 +15,18 @@
                                 {{ post.created_at }}
                             </div><!-- .posted-date -->
 
-                            <h2 class="entry-title">{{ post.titre }}</h2>
+                            <h2 class="entry-title">{{ post.titre|nl2br  }}</h2>
 
                         </header><!-- .entry-header -->
 
                         <div class="entry-content">
-                            <p>{{ post.contenu }}</p>
-                            <?php if (isset($_SESSION['user']['roles']) && in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) : ?>
+                            <p>{{ post.contenu|nl2br }}</p>
+                            {% if sessionItems.session == true %}
                                 <footer class="entry-footer flex flex-column flex-lg-row justify-content-around align-content-start align-lg-items-center">
-                                    <a class="read-more order-2" href="/admin/modifyChapiter/{{ post.id }}">Modifier</a>
+                                    <a class="read-more order-2" href="/admin/modifyChapter/{{ post.id }}">Modifier</a>
                                     <a class="read-more del-btn order-2" href="/admin/deletePost/{{ post.id }}">Supprimer</a>
                                 </footer><!-- .entry-footer -->
-
-                            <?php endif; ?>
+                            {% endif %}
 
                         </div><!-- .entry-content -->
 
@@ -57,16 +56,12 @@
 
                             <ol class="comment-list">
                                 {% for comment in comments %}
-                                    <li class="comment">
+                                    <li class="comment my-2">
                                         <div class="comment-body flex justify-content-between">
-                                            <figure class="comment-author-avatar">
-                                                <img src="images/user-1.png" alt="user">
-                                            </figure><!-- .comment-author-avatar -->
-
                                             <div class="comment-wrap">
                                                 <div class="comment-author flex flex-wrap align-items-center">
                                                     <span class="fn">
-                                                        <a>{{ comment.author }}</a>
+                                                        <a>{{ comment.author|raw  }}</a>
                                                     </span><!-- .fn -->
 
                                                     <span class="comment-meta">
@@ -74,7 +69,7 @@
                                                     </span><!-- .comment-meta -->
                                                 </div><!-- .comment-author -->
 
-                                                <p class='comment-wrap-p'>{{ comment.comment }}</p>
+                                                <p class='comment-wrap-p'>{{ comment.comment|nl2br }}</p>
                                                 <input class=" btn-signal btn-danger" type="submit" data-id="{{ comment.id }}" value="signaler">
 
                                             </div><!-- .comment-wrap -->

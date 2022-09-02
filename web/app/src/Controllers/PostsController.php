@@ -2,6 +2,7 @@
 
 namespace App\Acme\Controllers;
 
+use App\Acme\Controllers\Traits\SessionTrait;
 use App\Acme\Models\PostsModel;
 use App\Acme\Models\CommentsModel;
 use Twig\Error\LoaderError;
@@ -11,12 +12,16 @@ use Twig\Error\SyntaxError;
 
 class PostsController extends Controller
 {
+    use SessionTrait;
+
     /**
      * cette methode affichera une page listant toutes les posts de la base de données
      * @return void
      */
     public function index(): void
     {
+        $sessionItems = $this->getSession();
+
         //On instancie le modele correspondant à la table 'posts'
         $postsModel = new PostsModel;
 
@@ -24,10 +29,11 @@ class PostsController extends Controller
         $posts = $postsModel->findBy(['']);
         //On genere la vue 
         try {
-            $this->twig->display('posts/index.html.twig', compact("posts"));
+            $this->twig->display('posts/index.html.twig', compact('posts','sessionItems'));
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
+
     }
     /**
      * affiche 1 billet de blog
@@ -37,6 +43,8 @@ class PostsController extends Controller
 
     public function lire(int $id): void
     {
+        $sessionItems= $this->getSession();
+
         //On instancie le modéle
         $postsModel = new PostsModel;
         $commentsModel = new CommentsModel;
@@ -59,16 +67,19 @@ class PostsController extends Controller
             //On envoie a la vue 
             header('Location:' . $id . '');
             try {
-                $this->twig->display('posts/lire.html.twig', compact('post', "comments", 'addComment'));
+                $this->twig->display('posts/lire.html.twig', compact('post', 'comments', 'addComment','sessionItems'));
             } catch (LoaderError|RuntimeError|SyntaxError $e) {
                 echo 'erreur sur '.$e;
             }
 
         }
         try {
-            $this->twig->display('posts/lire.html.twig', compact('post', "comments"));
+            $this->twig->display('posts/lire.html.twig', compact('post', 'comments','sessionItems'));
+            $this->getSession();
+
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
+
     }
 }

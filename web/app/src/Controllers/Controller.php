@@ -3,6 +3,7 @@
 namespace App\Acme\Controllers;
 
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
@@ -16,7 +17,7 @@ abstract class Controller
         $this->loader = new FilesystemLoader(ROOT.'/app/src/Views');
 
         //Paramétrage de l'environnement Twig
-        $this->twig = new Environment($this->loader);
-
+        $this->twig = new Environment($this->loader,['debug' => true]);
+        $this->twig->addExtension(new DebugExtension());
     }
 }

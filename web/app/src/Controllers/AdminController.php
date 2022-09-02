@@ -2,6 +2,7 @@
 
 namespace App\Acme\Controllers;
 
+use App\Acme\Controllers\Traits\SessionTrait;
 use App\Acme\Models\CommentsModel;
 use App\Acme\Models\PostsModel;
 use Twig\Error\LoaderError;
@@ -10,6 +11,8 @@ use Twig\Error\SyntaxError;
 
 class AdminController extends Controller
 {
+    use SessionTrait;
+
     /**
      * @throws RuntimeError
      * @throws SyntaxError
@@ -19,13 +22,15 @@ class AdminController extends Controller
     {
         //On verifie si on est admin
         if ($this->isAdmin()) {
+            $sessionItems= $this->getSession();
+
             //On instancie le modele correspondant à la table 'posts'
             $postsModel = new PostsModel;
 
             //On va chercher tous les posts 
             $posts = $postsModel->findBy(['']);
             //On genere la vue 
-            $this->twig->display('admin/index.html.twig', compact("posts"));
+            $this->twig->display('admin/index.html.twig', compact("posts",'sessionItems'));
         }
     }
     /**
@@ -55,7 +60,10 @@ class AdminController extends Controller
      */
     public function addChapter()
     {
+
         if ($this->isAdmin()) {
+            $sessionItems = $this->getSession();
+
             $postModel = new PostsModel;
             if (!empty($_POST['titre']) && !empty($_POST['description'])) {
 
@@ -65,9 +73,9 @@ class AdminController extends Controller
                 $postModel->create($addChapter);
                 //On envoie a la vue 
                 header('location: /admin');
-                $this->twig->display('admin/addChapter.html.twig', compact('addChapter'));
+                $this->twig->display('admin/addChapter.html.twig', compact('addChapter','sessionItems'));
             }
-            $this->twig->display('admin/addChapter.html.twig', []);
+            $this->twig->display('admin/addChapter.html.twig',  compact('sessionItems'));
         }
     }
 
@@ -79,7 +87,7 @@ class AdminController extends Controller
     public function modifyChapter($id)
     {
         if ($this->isAdmin()) {
-
+            $sessionItems = $this->getSession();
             //On instancie le modéle
             $postsModel = new PostsModel;
             //On va chercher 1 billet de blog
@@ -93,10 +101,11 @@ class AdminController extends Controller
                 // On enregistre
                 $postModif->update();
                 header('Location: /posts/lire/' . $post->id);
-                $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'postModif'));
+                $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'postModif','sessionItems'));
             }
-            $this->twig->display('admin/modifyChapter.html.twig', compact('post'));
+            $this->twig->display('admin/modifyChapter.html.twig', compact('post','sessionItems'));
         }
+
     }
     /**
      * Affiche les commentaires signalés
@@ -106,13 +115,16 @@ class AdminController extends Controller
      */
     public function moderateComment(): void
     {
+
         if ($this->isAdmin()) {
+            $sessionItems= $this->getSession();
+
             $commentsModel = new CommentsModel;
 
             //On va chercher tous les posts 
             $moderates = $commentsModel->findBy(['moderates' => 1]);
             try {
-                $this->twig->display('admin/moderateComment.html.twig', compact('moderates'));
+                $this->twig->display('admin/moderateComment.html.twig', compact('moderates','sessionItems'));
             } catch (LoaderError|RuntimeError|SyntaxError $e) {
                 echo 'erreur '.$e;
             }

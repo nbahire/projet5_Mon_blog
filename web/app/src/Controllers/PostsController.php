@@ -26,7 +26,7 @@ class PostsController extends Controller
         $postsModel = new PostsModel;
 
         //On va chercher tous les posts 
-        $posts = $postsModel->findBy(['']);
+        $posts = $postsModel->findAll();
         //On genere la vue 
         try {
             $this->twig->display('posts/index.html.twig', compact('posts','sessionItems'));
@@ -58,11 +58,12 @@ class PostsController extends Controller
         }
         //On associe le commentaire a son billet de blog correspodant
         $comments = $commentsModel->findBy(['post_id' => $id]);
-        if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-
+        if (!empty($_SESSION['user']) && !empty($_POST['comment'])) {
+            $user = strip_tags($_SESSION['user']['name']);
+            $comment = strip_tags($_POST['comment']);
             $addComment = $commentsModel->setPost_id($id)
-                ->setAuthor(htmlentities($_POST['author']))
-                ->setComment(htmlentities($_POST['comment']));
+                ->setAuthor($user)
+                ->setComment(htmlentities($comment));
             $commentsModel->create($addComment);
             //On envoie a la vue 
             header('Location:' . $id . '');

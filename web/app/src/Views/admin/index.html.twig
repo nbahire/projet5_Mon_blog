@@ -1,14 +1,15 @@
-{% extends "baseAdmin.html.twig" %}
+{% extends "base.html.twig" %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 {% endblock %}
 {% set post = posts|last  %}
-
+{% block header %}
+    <div class="entry-div-page flex flex-column flex-lg-row justify-content-around align-content-start align-lg-items-center">
+        <h1 class="section-heading ">Espace administration</h1>
+    </div>
+{% endblock %}
 {% block content %}
     <div class="container single-page">
-        <div class="entry-div-page flex flex-column flex-lg-row justify-content-around align-content-start align-lg-items-center">
-            <h2 class="section-heading text-uppercase">Bienvenue dans l'administration {{ post.id }}</h2>
-        </div>
         <div class="entry-div flex flex-column flex-lg-row justify-content-around align-content-start align-lg-items-center">
             <a class="btn btn-primary btn-outline-success btn-lg " href="admin/addChapter">Ecrire un nouvel article</a>
             <a class="btn btn-secondary btn-outline-info btn-lg " href="admin/moderateComment">Moderer les commentaires</a>
@@ -17,9 +18,9 @@
         <div class="row">
             <div class=" col-12 col-lg-12">
                 <div class="last-chap content-wrap">
-                    <h2 class="section-heading text-uppercase">Dérnier article publié </h2>
-                    <header class="entry-header">
-                        <h2 class="entry-title">{{ post.titre }}</h2>
+                    <h2 class="entry-title ">Dérnier article publié </h2>
+                    <header class="entry-header mt-4">
+                        <h3 class="text-muted">{{ post.titre }}</h3>
                     </header><!-- .entry-header -->
 
                     <div class="entry-content">
@@ -27,7 +28,7 @@
                     </div><!-- .entry-content -->
 
                     <footer class="entry-footer flex flex-column flex-lg-row justify-content-end align-content-start align-lg-items-center">
-                        <a class="read-more order-2" href="/admin/modifyChapiter/{{ post.id }}">Modifier</a>
+                        <a class="read-more order-2" href="/admin/modifyChapter/{{ post.id }}">Modifier</a>
                     </footer><!-- .entry-footer -->
                 </div><!-- .content-wrap -->
 

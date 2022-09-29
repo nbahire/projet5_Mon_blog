@@ -1,27 +1,26 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block header %}
+    <div class="entry-div-page flex flex-column flex-lg-row justify-content-around my-5 pt-5">
+        <h1 class="section-heading text-center">{{ post.titre|raw|nl2br  }}</h1>
+    </div>
 {% endblock %}
 
 {% block content %}
 <div class="outer-container">
-
         <div class="container single-page blog-page">
             <div class="row">
                 <div class="col-12">
                     <div class="content-wrap">
-                        <header class="entry-header">
                             <div class="posted-date">
                                 {{ post.created_at }}
                             </div><!-- .posted-date -->
-
-                            <h2 class="entry-title">{{ post.titre|nl2br  }}</h2>
-
-                        </header><!-- .entry-header -->
-
                         <div class="entry-content">
-                            <p>{{ post.contenu|nl2br }}</p>
-                            {% if sessionItems.session == true %}
+                            <p>{{ post.contenu|raw|nl2br }}</p>
+                            {% if sessionItems.session == 'admin' %}
                                 <footer class="entry-footer flex flex-column flex-lg-row justify-content-around align-content-start align-lg-items-center">
                                     <a class="read-more order-2" href="/admin/modifyChapter/{{ post.id }}">Modifier</a>
                                     <a class="read-more del-btn order-2" href="/admin/deletePost/{{ post.id }}">Supprimer</a>
@@ -38,11 +37,11 @@
                             </div><!-- .comments-count -->
                         </footer><!-- .entry-footer -->
                     </div><!-- .content-wrap -->
+                    {% if sessionItems.session == 'admin' or  sessionItems.session == 'user'%}
                     <div class="comments-form">
                         <div class="comment-respond">
                             <h3 class="comment-reply-title">Laisser un commentaire</h3>
                             <form class="comment-form" method="post" action="{{ addComment }}">
-                                <input type="text" placeholder="Nom" name="author" required>
                                 <textarea rows="8" cols="6" placeholder="Commentaire" name="comment" required></textarea>
                                 <input  class="btn-sub pull-right" type="submit" value="Envoyer">
                             </form><!-- .comment-form -->
@@ -50,18 +49,27 @@
                         </div><!-- .comment-respond -->
                     </div><!-- .comments-form -->
 
+                    {% else %}
+                        <div class="comments-form">
+                            <div class="comment-respond">
+                                <h3 class="comment-reply-title"><a href="{{ asset('users/login') }}">Connectez-vous</a>  pour laisser un commentaire</h3>
+                            </div><!-- .comment-respond -->
+                        </div><!-- .comments-form -->
+
+                    {% endif %}
+
                     <div id="end-page" class="content-area">
                         <div class="post-comments">
                             <h3 class="comments-title">Commentaires</h3>
 
                             <ol class="comment-list">
                                 {% for comment in comments %}
-                                    <li class="comment my-2">
+                                    <li class="comment">
                                         <div class="comment-body flex justify-content-between">
                                             <div class="comment-wrap">
                                                 <div class="comment-author flex flex-wrap align-items-center">
                                                     <span class="fn">
-                                                        <a>{{ comment.author|raw  }}</a>
+                                                        <a>{{ comment.author|raw|nl2br  }}</a>
                                                     </span><!-- .fn -->
 
                                                     <span class="comment-meta">
@@ -69,7 +77,7 @@
                                                     </span><!-- .comment-meta -->
                                                 </div><!-- .comment-author -->
 
-                                                <p class='comment-wrap-p'>{{ comment.comment|nl2br }}</p>
+                                                <p class='comment-wrap-p'>{{ comment.comment|raw|nl2br }}</p>
                                                 <input class=" btn-signal btn-danger" type="submit" data-id="{{ comment.id }}" value="signaler">
 
                                             </div><!-- .comment-wrap -->

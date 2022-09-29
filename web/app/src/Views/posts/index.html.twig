@@ -1,32 +1,14 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 {% endblock %}
 
 {% block header %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-16">
-                <div class="site-branding flex flex-column align-items-center">
-
-                    <h1 class="site-title"><a rel="home">Les chapitres</a></h1>
-                </div><!-- .site-branding -->
-                <div class="container">
-                    <?php if (!empty($_SESSION['erreur'])) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $_SESSION['erreur'];
-                        unset($_SESSION['erreur']); ?>
-                    </div>
-                    <?php endif; ?>
-                </div>
-
-            </div><!-- .col -->
-        </div><!-- .row -->
-    </div><!-- .container -->
+    <h1 class="site-title"><a rel="home">Les articles</a></h1>
 {% endblock %}
 
 {% block content %}
-    {%  for post  in posts %}
+    {%  for post  in posts|reverse %}
         <div class="container single-page">
             <div class="row">
                 <div class=" col-12 col-lg-12">
@@ -38,10 +20,7 @@
                             </div><!-- .posted-date -->
 
                             <h2 class="entry-title"> {{ post.titre|raw  }}</h2>
-
                         </header><!-- .entry-header -->
-
-
                         <div class="entry-content">
                             <p>{{ post.description|raw  }}</p>
                         </div><!-- .entry-content -->

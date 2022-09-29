@@ -32,6 +32,7 @@ class AdminController extends Controller
             //On genere la vue 
             $this->twig->display('admin/index.html.twig', compact("posts",'sessionItems'));
         }
+
     }
     /**
      * On verfie si on est admin

@@ -25,7 +25,7 @@ class MainController extends Controller
 
         //On va chercher tous les posts
         $posts = $postsModel->findBy(['']);
-        $post = $posts[0];
+        $post = end($posts);
         $this->twig->display('main/index.html.twig',compact('post','sessionItems'));
     }
 

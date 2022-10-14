@@ -8,9 +8,13 @@ trait SessionTrait
      */
     public function getSession(): array
     {
-        $session = false;
+        $session = '';
         if(isset($_SESSION['user'] )&& in_array('ROLE_ADMIN',$_SESSION['user']['roles'] )){
-            $session = true;
+            $session = 'admin';
+        }
+
+        if(isset($_SESSION['user'] )&& in_array('ROLE_USER',$_SESSION['user']['roles'] )){
+            $session = 'user';
         }
         $error = null;
         if (!empty($_SESSION['erreur'])){

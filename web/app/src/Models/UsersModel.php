@@ -12,7 +12,7 @@ class UsersModel extends Model
 
     public function __construct()
     {
-
+        parent::__construct();
         $this->table = 'users';
     }
 
@@ -30,7 +30,8 @@ class UsersModel extends Model
         $_SESSION['user'] = [
             'id' => $this->id,
             'email' => $this->email,
-            'roles' => $this->roles
+            'roles' => $this->roles,
+            'name' => $this->name
         ];
     }
 
@@ -98,7 +99,7 @@ class UsersModel extends Model
     /**
      * Get the value of roles
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';

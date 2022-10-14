@@ -1,15 +1,14 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="css/homeStyles.css">
+<link rel="stylesheet" href="{{ asset('css/homeStyles.css') }}">
 {% endblock %}
 
 {% block header %}
     <div class="container">
-        <div class="masthead-heading text-uppercase">Billet simple pour l'alaska</div>
-        <div class="masthead-subheading">par Alain Nsanzabahire</div>
-        <p>Découvrez sur ce site la magnifique histoire d'un jeune homme à la découverte des plaines enneigé de
-            l'Alaska. Aventures, humanisme et grandes emotions sont au rendez-vous !!</p>
-        <a class="btn btn-primary btn-lg text-uppercase js-scroll-trigger" href="/posts">Lire les chapitres</a>
+        <div class="masthead-heading text-uppercase">Le royaume Du developpeur back-end</div>
+        <div class="masthead-subheading">par Alain Ledev</div>
+        <p>Découvrez sur ce site la magnifique histoire du developpement back-end !!</p>
+        <a class="btn btn-primary btn-lg text-uppercase js-scroll-trigger" href="/posts">Lire les article</a>
     </div>
 {% endblock %}
 
@@ -19,27 +18,20 @@
 
         <div class="container">
             <div class="text-center">
-                <h2 class="section-heading text-uppercase">A propos de l'auteur</h2>
+                <h2 class="section-heading text-uppercase">A propos de moi</h2>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="images/2.jpg" alt="" />
-                        <h4>Jean Forteroche</h4>
-                        <p class="text-muted">Ecrivain</p>
+                        <img class="mx-auto rounded-circle" src="{{ asset('images/avatar.svg') }}" alt="" />
+                        <h4>Alain Nsanzabahire</h4>
+                        <p class="text-muted">Développeur web</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 mx-auto text-center">
-                    <p class="large text-muted">Romancier français né en 1974 à Nice, Jean Forteroche est l'auteur le
-                        plus vendu en France. Écrivain prolifique, il
-                        sort chaque année un nouveau roman qui atteint directement le top des ventes. Traduit en 40
-                        langues, il est également
-                        l'un des auteurs français les plus lus à l'étranger.
-                        Jonglant avec les genres, Jean Forteroche est un auteur qui se distingue pour son sens du suspense et son style très
-                        cinématographique. Si ses romans se rapprochent du thriller, ils font également la part belle à l'amour et
-                        à l'aventure.</p>
+                    <p class="large text-muted">A l'aise en informatique j'ai décidé d'en faire mon job et je suis devenue développeuse web pour transmettre ma passion à travers mes créations.</p>
                 </div>
             </div>
         </div>
@@ -49,17 +41,78 @@
     <section class="page-section" id="services">
         <div class="container">
             <div class="text-center">
-                <h2>Dérnier chapitre publié </h2>
+                <h2>Dérnier article publié </h2>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
                     <h4 class="my-3"> {{ post.titre|raw }} </h4>
                     <p class="text-muted">{{ (post.description)|raw }}</p>
-                    <a class="btn btn-primary btn-sm text-uppercase js-scroll-trigger" href="posts/lire/{{ post.id }}">Lire la
+                    <a class="btn btn-primary btn-sm text-uppercase js-scroll-trigger" href="/posts/lire/{{ post.id }}">Lire la
                         suite</a>
 
                 </div>
             </div>
         </div>
     </section>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Me Contacter</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="wrapper img" style="background-image: url({{ asset('images/img.jpg') }});">
+                        <div class="row">
+                            <div class="col-md-9 col-lg-7">
+                                <div class="contact-wrap w-100 p-md-5 p-4">
+                                    <div id="form-message-warning" class="mb-4"></div>
+                                    <div id="form-message-success" class="mb-4">
+
+                                    </div>
+                                    <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="name" id="surname" placeholder="Prenom">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="email">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Object">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Envoyer" class="btn btn-primary">
+                                                    <div class="submitting"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

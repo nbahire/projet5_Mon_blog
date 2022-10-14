@@ -1,30 +1,35 @@
-{% extends "baseAdmin.html.twig" %}
+{% extends "base.html.twig" %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 {% endblock %}
+{% block header %}
+    <div class="entry-div-page flex flex-column flex-lg-row justify-content-around my-5 pt-5">
+        <h1 class="section-heading text-center">Modifier l'article</h1>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <h1>Modifier le chapitre</h1>
-
-    <form class="comment-form" method="post" action="{{ postModif }}">
+<div class="container entry-div-page my-3">
+<form class="comment-form" method="post" action="{{ postModif }}">
         <div class=" form-group">
-            <label for="titre">Titre du chapitre</label>
-            <input type="text" name="titre" value="{{ post.titre }}" class="text-dark" required />
+            <label for="titre">Titre de l'article</label>
+            <input type="text" class="form-control" value="{{ post.titre }} " name="titre" rows="1" class="text-dark" required />
         </div>
 
         <div class=" form-group">
-            <label for="description">Description du chapitre</label>
-            <textarea type="text" name="description" class="text-dark" required >{{ post.description }}</textarea>
+            <label for="description">Description de l'article</label>
+            <textarea type="text" class="form-control" name="description" class="text-dark" required >{{ post.description }}</textarea>
         </div>
 
         <div class=" form-group">
-            <label for="contenu">Contenu du chapitre</label>
+            <label for="contenu">Contenu de l'article</label>
             <textarea id="mytextarea" name="contenu" required>{{ post.contenu }}</textarea>
         </div>
+    <footer class="entry-footer flex flex-column flex-lg-row justify-content-end align-content-start align-lg-items-center">
+        <input type="submit" value="Modifier" class="read-more order-2" />
+    </footer><!-- .entry-footer -->
+ </form>
+</div>
 
-        <div class=" form-group">
-            <div class="text-left flex flex-column flex-lg-row justify-content-end  align-content-end align-lg-items-center">
-                <input type="submit" value="Modifier" class="btn btn-primary" />
-            </div>
-        </div>
-    </form>
 {% endblock %}

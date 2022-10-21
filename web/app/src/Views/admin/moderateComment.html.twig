@@ -28,9 +28,9 @@
                     <td>{{ moderate.author }}</td>
                     <td>{{ moderate.comment }}</td>
                     <td>
-                        <a href="/admin/deleteComment/{{ moderate.id }}" class="btn btnSupp btn-danger">Supprimer</a>
-                        <a type="button" type="submit" href="/admin/restaure/{{ moderate.id }}" class="close" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <a href="/admin/deleteComment/{{ moderate.id }}" class="btn btnSupp btn-danger mr-3">Supprimer</a>
+                        <a type="button" type="submit" href="/admin/restaure/{{ moderate.id }}" class="btn btnAccept btn-success" aria-label="Close">
+                            <span aria-hidden="true">Accepter</span>
                         </a>
                     </td>
                 </tr>

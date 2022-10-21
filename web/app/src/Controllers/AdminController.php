@@ -123,7 +123,7 @@ class AdminController extends Controller
             $commentsModel = new CommentsModel;
 
             //On va chercher tous les posts 
-            $moderates = $commentsModel->findBy(['moderates' => 1]);
+            $moderates = $commentsModel->findBy(['moderates' => 0]);
             try {
                 $this->twig->display('admin/moderateComment.html.twig', compact('moderates','sessionItems'));
             } catch (LoaderError|RuntimeError|SyntaxError $e) {
@@ -160,7 +160,7 @@ class AdminController extends Controller
         }
     }
     /**
-     * active le signalement du commentaire en mettant moderate a un
+     * active le signalement du commentaire en mettant moderate a 0
      *
      * @param int $id
      * @return void
@@ -171,22 +171,24 @@ class AdminController extends Controller
         $commentaArray = $commentsModel->find($id);
         if ($commentaArray) {
             $comment = $commentsModel->hydrate($commentaArray);
-            $comment->setModerates($comment->getModerates() ?: 1);
+            $comment->setModerates($comment->getModerates() ?: 0);
             $comment->update();
         }
     }
-    public function restaure($id)
+
+    /**
+     * restaure le commentaire en mettant moderate à 1
+     * @param int $id
+     * @return void
+     */
+    public function restaure(int $id)
     {
         $commentsModel = new CommentsModel;
         $commentaArray = $commentsModel->find($id);
         if ($commentaArray) {
             $comment = $commentsModel->hydrate($commentaArray);
-
-            if ($comment->getModerates()) {
-                $comment->setModerates(0);
-                header('location: /admin/moderateComment');
-            }
-
+            $comment->setModerates(1);
+            header('location: /admin/moderateComment');
             $comment->update();
         }
     }

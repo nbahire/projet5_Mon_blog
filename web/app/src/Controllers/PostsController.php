@@ -56,31 +56,34 @@ class PostsController extends Controller
             header('Location: erreur');
             exit;
         }
-        //On associe le commentaire a son billet de blog correspodant
-        $comments = $commentsModel->findBy(['post_id' => $id]);
+
+        $addComment = null;
         if (!empty($_SESSION['user']) && !empty($_POST['comment'])) {
             $user = strip_tags($_SESSION['user']['name']);
             $comment = strip_tags($_POST['comment']);
             $addComment = $commentsModel->setPost_id($id)
                 ->setAuthor($user)
                 ->setComment(htmlentities($comment));
-            $commentsModel->create($addComment);
-            //On envoie a la vue 
-            header('Location:' . $id . '');
-            try {
-                $this->twig->display('posts/lire.html.twig', compact('post', 'comments', 'addComment','sessionItems'));
-            } catch (LoaderError|RuntimeError|SyntaxError $e) {
-                echo 'erreur sur '.$e;
-            }
-
+            $commentsModel->create();
         }
-        try {
-            $this->twig->display('posts/lire.html.twig', compact('post', 'comments','sessionItems'));
-            $this->getSession();
 
+        //On associe le commentaire a son billet de blog correspodant
+        $comments = $commentsModel->findBy(['post_id' => $id]);
+        $displayComment = [];
+        foreach ($comments as $moderatedComment) {
+            if($moderatedComment->moderates === 1){
+                $displayComment[] = $moderatedComment;
+            }
+        }
+        $moderatedComments = $displayComment;
+        try {
+            $this->twig->display(
+                'posts/lire.html.twig', compact('post', 'addComment', 'moderatedComments', 'sessionItems')
+            );
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
+
 
     }
 }

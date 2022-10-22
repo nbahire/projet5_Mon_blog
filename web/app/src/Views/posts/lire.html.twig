@@ -48,22 +48,17 @@
 
                         </div><!-- .comment-respond -->
                     </div><!-- .comments-form -->
-
                     {% else %}
                         <div class="comments-form">
                             <div class="comment-respond">
                                 <h3 class="comment-reply-title"><a href="{{ asset('users/login') }}">Connectez-vous</a>  pour laisser un commentaire</h3>
                             </div><!-- .comment-respond -->
                         </div><!-- .comments-form -->
-
                     {% endif %}
-
-                    <div id="end-page" class="content-area">
                         <div class="post-comments">
                             <h3 class="comments-title">Commentaires</h3>
-
                             <ol class="comment-list">
-                                {% for comment in comments %}
+                                {% for comment in moderatedComments %}
                                     <li class="comment">
                                         <div class="comment-body flex justify-content-between">
                                             <div class="comment-wrap">
@@ -86,8 +81,6 @@
                                 {% endfor %}
                             </ol><!-- .comment-list -->
                         </div><!-- .post-comments -->
-
-                    </div><!-- .content-area -->
                 </div><!-- .col -->
             </div><!-- .row -->
         </div><!-- .container -->

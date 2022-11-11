@@ -65,6 +65,8 @@ class PostsController extends Controller
                 ->setAuthor($user)
                 ->setComment(htmlentities($comment));
             $commentsModel->create();
+            header('Location:'. $_SERVER['HTTP_REFERER']);
+
         }
 
         //On associe le commentaire a son billet de blog correspodant

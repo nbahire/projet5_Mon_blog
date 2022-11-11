@@ -20,6 +20,12 @@ class UsersModel extends Model
     {
         return $this->requete("SELECT * FROM {$this->table} WHERE email = ?", [$email])->fetch();
     }
+
+    public function updatePassword(string $email, string $password)
+    {
+        return $this->requete("UPDATE users SET password='$password' WHERE email='$email'");
+    }
+
     /**
      * Crée la session de l'utilisateur
      *

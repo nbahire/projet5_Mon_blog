@@ -27,9 +27,10 @@ class PostsController extends Controller
 
         //On va chercher tous les posts 
         $posts = $postsModel->findAll();
+        $message = $this->getSuccess();
         //On genere la vue 
         try {
-            $this->twig->display('posts/index.html.twig', compact('posts','sessionItems'));
+            $this->twig->display('posts/index.html.twig', compact('posts','sessionItems', 'message'));
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
@@ -41,7 +42,7 @@ class PostsController extends Controller
      * @return void
      */
 
-    public function lire(int $id): void
+    public function read(int $id): void
     {
         $sessionItems= $this->getSession();
 
@@ -65,6 +66,7 @@ class PostsController extends Controller
                 ->setAuthor($user)
                 ->setComment(htmlentities($comment));
             $commentsModel->create();
+            $_SESSION['success'] = 'Votre message a été envoyé pour moderation';
             header('Location:'. $_SERVER['HTTP_REFERER']);
 
         }
@@ -78,9 +80,10 @@ class PostsController extends Controller
             }
         }
         $moderatedComments = $displayComment;
+        $message = $this->getSuccess();
         try {
             $this->twig->display(
-                'posts/lire.html.twig', compact('post', 'addComment', 'moderatedComments', 'sessionItems')
+                'posts/read.html.twig', compact('post', 'addComment', 'moderatedComments', 'sessionItems', 'message')
             );
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;

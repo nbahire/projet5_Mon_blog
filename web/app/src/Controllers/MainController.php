@@ -22,11 +22,11 @@ class MainController extends Controller
         //On instancie le modele correspondant à la table 'posts'
         $postsModel = new PostsModel;
         $sessionItems = $this->getSession();
-
+        $message = $this->getSuccess();
         //On va chercher tous les posts
         $posts = $postsModel->findBy(['']);
         $post = end($posts);
-        $this->twig->display('main/index.html.twig',compact('post','sessionItems'));
+        $this->twig->display('main/index.html.twig',compact('post','sessionItems', 'message'));
     }
 
     /**

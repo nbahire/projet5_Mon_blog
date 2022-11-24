@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top " style="background-color: #00376E;">
+    <a class="navbar-brand px-3" href="/main">Alain le dév</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Mon blog</a>
+            </li>
+        </ul>
+    </div>
+    <ul class="navbar-nav ml-auto px-2">
+
+        {% if sessionItems.session == 'admin' %}
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">Administration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/logout">Déconnexion</a>
+            </li>
+        {% elseif sessionItems.session == 'user'%}
+            <li class="nav-item">
+                <a class="nav-link" href="/users">Mon compte</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/logout">Déconnexion</a>
+            </li>
+
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/users/login"> Connexion </a>
+            </li>
+        {% endif %}
+
+    </ul>
+
+</nav>

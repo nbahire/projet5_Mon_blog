@@ -12,7 +12,7 @@ use Twig\Error\SyntaxError;
 class AdminController extends Controller
 {
     use SessionTrait;
-
+    private $message;
     /**
      * @throws RuntimeError
      * @throws SyntaxError
@@ -26,11 +26,11 @@ class AdminController extends Controller
 
             //On instancie le modele correspondant à la table 'posts'
             $postsModel = new PostsModel;
-
+            $message = $this->getSuccess();
             //On va chercher tous les posts 
             $posts = $postsModel->findBy(['']);
             //On genere la vue 
-            $this->twig->display('admin/index.html.twig', compact("posts",'sessionItems'));
+            $this->twig->display('admin/index.html.twig', compact("posts",'sessionItems', 'message'));
         }
 
     }
@@ -43,10 +43,8 @@ class AdminController extends Controller
     {
         //On verifie si on est connecté et si "ROLE_ADMIN" est dans nos roles
         if (isset($_SESSION['user']) && in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
-
             return true;
         } else {
-
             // On est pas admin
             $_SESSION['erreur'] = "Accès interdit !!";
             header('location: posts');
@@ -54,14 +52,8 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     */
     public function addChapter()
     {
-
         if ($this->isAdmin()) {
             $sessionItems = $this->getSession();
 
@@ -72,7 +64,8 @@ class AdminController extends Controller
                     ->setDescription(htmlentities($_POST['description']))
                     ->setContenu($_POST['contenu']);
                 $postModel->create($addChapter);
-                //On envoie a la vue 
+                //On envoie a la vue
+                $_SESSION['success'] = 'Article ajouté avec success';
                 header('location: /admin');
                 $this->twig->display('admin/addChapter.html.twig', compact('addChapter','sessionItems'));
             }
@@ -101,7 +94,8 @@ class AdminController extends Controller
                     ->setContenu($_POST['contenu']);
                 // On enregistre
                 $postModif->update();
-                header('Location: /posts/lire/' . $post->id);
+                $_SESSION['success'] = 'L\'article a été modifié';
+                header('Location: /posts/read/' . $post->id);
                 $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'postModif','sessionItems'));
             }
             $this->twig->display('admin/modifyChapter.html.twig', compact('post','sessionItems'));
@@ -156,6 +150,7 @@ class AdminController extends Controller
         if ($this->IsAdmin()) {
             $deleteP = new PostsModel;
             $deleteP->delete($id);
+
             header('location: /posts');
         }
     }

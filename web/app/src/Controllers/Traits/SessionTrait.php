@@ -16,19 +16,26 @@ trait SessionTrait
         if(isset($_SESSION['user'] )&& in_array('ROLE_USER',$_SESSION['user']['roles'] )){
             $session = 'user';
         }
-        $error = null;
-        if (!empty($_SESSION['erreur'])){
-            $error = $_SESSION['erreur'];
-        }
+        return ['session' => $session];
+    }
+    public function getSuccess() : ?string
+    {
         $message = null;
-        if (!empty($_SESSION['message'])){
-            $message = $_SESSION['message'];
+        if (isset($_SESSION['success'])) {
+            $message = $_SESSION['success'];
+            unset($_SESSION['success']);
         }
-        return $sessionItems =[
-            'message' => $message,
-            'error' => $error,
-            'session' => $session
-        ];
+        return $message;
+    }
+
+    public function getError() : ?string
+    {
+        $error = null;
+        if (isset($_SESSION['error'])) {
+            $error = $_SESSION['error'];
+            unset($_SESSION['error']);
+        }
+        return $error;
     }
 
 }

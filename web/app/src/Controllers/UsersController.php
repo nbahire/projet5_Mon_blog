@@ -20,19 +20,19 @@ class UsersController extends Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function index()
+    public function index(): void
     {
-        if(isset($_SESSION['user']) && in_array('ROLE_USER', $_SESSION['user']['roles'])){
-            //On verifie si on est admin
-            $sessionItems= $this->getSession();
-            $userInfo = [
-                'name' => $_SESSION['user']['name'],
-                'email' => $_SESSION['user']['email']
-            ];
-            //On genere la vue
-            $this->twig->display('users/index.html.twig', compact('sessionItems','userInfo'));
-        }
-
+            if(isset($_SESSION['user']) && in_array('ROLE_USER', $_SESSION['user']['roles'])){
+                //On verifie si on est admin
+                $sessionItems= $this->getSession();
+                $userInfo = [
+                    'name' => $_SESSION['user']['name'],
+                    'email' => $_SESSION['user']['email']
+                ];
+                $message = $this->getSuccess();
+                //On genere la vue
+                $this->twig->display('users/index.html.twig', compact('sessionItems','userInfo', 'message'));
+            }
     }
 
     private function isNotUser(): bool
@@ -41,7 +41,6 @@ class UsersController extends Controller
         if (!isset($_SESSION['user'])) {
             return true;
         } else {
-
             // On est pas admin
             $_SESSION['erreur'] = "Accès interdit !!";
             header('location: /users');
@@ -58,36 +57,37 @@ class UsersController extends Controller
     {
         if ($this->isNotUser()) {
         // On vérifie si notre post contient les champs email et password
-        if (!empty($_POST['email']) && !empty($_POST['password'])) {
-            // On nettoie l'e-mail et on chiffre le mot de passe
-            $userModel = new UsersModel;
+            if (!empty($_POST['email']) && !empty($_POST['password'])) {
+                $userModel = new UsersModel;
+                $userArray = $userModel->findByEmail(strip_tags($_POST['email']));
 
-            $userArray = $userModel->findByEmail(strip_tags($_POST['email']));
-            if (!$userArray) {
-                $_SESSION['erreur'] = " Identifiants incorectes !! ";
-                header('Location: login');
-                exit;
-            }
-            $user = $userModel->hydrate($userArray);
-
-            if (password_verify($_POST['password'], $user->getPassword())) {
-                $user->setSession();
-                if (isset($_SESSION['user']['roles']) && in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
-                    header('Location: /admin');
+                if (!$userArray) {
+                    $_SESSION['erreur'] = " Identifiants incorectes !! ";
+                    header('Location: login');
+                    exit;
                 }
-                if (isset($_SESSION['user']['roles']) && in_array('ROLE_USER', $_SESSION['user']['roles'])) {
-                    header('Location: /users');
-                }
-            } else {
-                $_SESSION['erreur'] = " Identifiants incorectes !! ";
-                header('Location: login');
-                exit;
-            }
-            $this->twig->display('users/login.html.twig', compact('user'));
-        }
-        $this->twig->display('users/login.html.twig');
-        }
+                $user = $userModel->hydrate($userArray);
 
+                if (password_verify(strip_tags($_POST['password']), $user->getPassword())) {
+                    $user->setSession();
+                    $_SESSION['success'] = 'Bienvenue '.$_SESSION['user']['name'];
+                    if (isset($_SESSION['user']['roles']) && in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
+                        header('Location: /admin');
+                    }
+
+                    if (isset($_SESSION['user']['roles']) && in_array('ROLE_USER', $_SESSION['user']['roles'])) {
+                        header('Location: /users');
+                    }
+                } else {
+                    $_SESSION['erreur'] = " Identifiants incorectes !! ";
+                    header('Location: login');
+                    exit;
+                }
+                $this->twig->display('users/login.html.twig', compact('user'));
+            }
+            $message = $this->getSuccess();
+            $this->twig->display('users/login.html.twig', compact('message'));
+        }
     }
 
     /**
@@ -125,6 +125,7 @@ class UsersController extends Controller
                 ->setRoles($role)
                 ->setPassword($pass);
             $user->create();
+            $_SESSION['success'] = 'Bienvenue dans le monde du dev '.$_SESSION['user']['name'];
             header('Location: /users');
         }
         $this->twig->display('users/register.html.twig', ['registerForm' => $form->create()]);
@@ -135,9 +136,9 @@ class UsersController extends Controller
      * @throws Exception
      * @throws \Exception
      */
-    public function forgotten()
+    public function forgotten(): void
     {
-        if (!$this->isNotUser()) {
+        if ($this->isNotUser()) {
 
         // On instancie le formulaire
         $form = new Form;
@@ -186,11 +187,11 @@ class UsersController extends Controller
             $phpmailer->Subject = $subject;
             $phpmailer->Body = $body;
             $phpmailer->AddAddress($emailAddress);
-            header('Location: /users/forgotten');
             if (!$phpmailer->Send()) {
                 echo "Mailer Error: " . $phpmailer->ErrorInfo;
             } else {
-                echo "An email has been sent";
+                $_SESSION['success']  = 'Un email contenant le lien de réinitialisation vous a été envoyé !!';
+                header('Location: /main');
             }
             $this->twig->display('users/forgotten.html.twig', ['forgottenPassForm' => $form->create(), $user]);
 
@@ -199,10 +200,7 @@ class UsersController extends Controller
         }
 
     }
-    /**
-     * @throws Exception
-     */
-    public function reset()
+    public function reset(): void
     {
         // On instancie le formulaire
         $form = new Form;
@@ -224,11 +222,13 @@ class UsersController extends Controller
             $email = $user->email;
             $pass = password_hash($_POST['password'], PASSWORD_ARGON2I);
             $userModel->updatePassword($email, $pass);
-            header('Location: login');
+            $_SESSION['success']  = 'Votre mot de passe a été réinitialisation !!';
             unset($_SESSION['token'], $_SESSION['email']);
+            header('Location: login');
         }
         try {
-            $this->twig->display('users/reset.html.twig', ['resetPassForm' => $form->create(), $user]);
+            $message = $this->getSuccess();
+            $this->twig->display('users/reset.html.twig', ['resetPassForm' => $form->create(), $user, $message]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             $_SESSION['erreur'] = 'Erreur '.$e.'!!';
         }
@@ -240,6 +240,7 @@ class UsersController extends Controller
     #[NoReturn] public function logout(): void
     {
         unset($_SESSION['user']);
+        $_SESSION['success'] = 'vous etes maintenant deconnécté ';
         header('Location: /main');
         exit;
     }

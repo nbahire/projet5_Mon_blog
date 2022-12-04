@@ -20,11 +20,11 @@
                 <div class="last-chap content-wrap">
                     <h2 class="entry-title ">Dérnier article publié </h2>
                     <header class="entry-header mt-4">
-                        <h3 class="text-muted">{{ post.titre }}</h3>
+                        <h3 class="text-muted">{{ post.titre|raw|nl2br }}</h3>
                     </header><!-- .entry-header -->
 
                     <div class="entry-content">
-                        <p>{{ post.description }} </p>
+                        <p>{{ post.description|raw|nl2br }} </p>
                     </div><!-- .entry-content -->
 
                     <footer class="entry-footer flex flex-column flex-lg-row justify-content-end align-content-start align-lg-items-center">

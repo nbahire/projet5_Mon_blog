@@ -66,7 +66,7 @@ class Form
      * @param array $attributs Attributs
      * @return Form
      */
-    public function startForm(string $methode = 'post', string $action = '#', array $attributs = []): self
+    public function startForm(string $methode = 'post', string $action = '#', array $attributs = ['class'=>'comment-form form-reg']): self
     {
         // On crée la balise form
         $this->formCode .= "<form action='$action' method='$methode'";
@@ -173,10 +173,10 @@ class Form
      * @param array $attributs
      * @return Form
      */
-    public function addButton(string $texte, array $attributs = []):self
+    public function addButton(string $type, string $texte, array $attributs = []):self
     {
         // On ouvre le bouton
-        $this->formCode .= '<button ';
+        $this->formCode .= "<button type='$type'";
 
         // On ajoute les attributs
         $this->formCode .= $attributs ? $this->addAttributs($attributs) : '';

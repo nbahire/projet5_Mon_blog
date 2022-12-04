@@ -104,12 +104,12 @@ class UsersController extends Controller
         // On ajoute chacune des parties qui nous intéressent
         $form->startForm()
             ->addLabelFor('name', 'Nom')
-            ->addInput('name', 'name', ['id' => 'name', 'class' => 'form-control mb-2'])
+            ->addInput('email', 'name', ['id' => 'name', 'class' => 'form-control mb-2'])
             ->addLabelFor('email', 'Email')
             ->addInput('email', 'email', ['id' => 'email', 'class' => 'form-control mb-2'])
             ->addLabelFor('password', 'Mot de passe')
             ->addInput('password', 'password', ['id' => 'password', 'class' => 'form-control mb-2'])
-            ->addButton('S\'enregister', ['class' => 'btn btn-secondary'])
+            ->addButton('submit', 'S\'enregister', ['class' => 'btn btn-primary pull-right'])
             ->endForm()
         ;
         // On vérifie si notre post contient les champs email et password
@@ -147,7 +147,7 @@ class UsersController extends Controller
         $form->startForm()
             ->addLabelFor('email', 'Entrez votre adresse email', ['class' => 'mb-2'])
             ->addInput('email', 'email', ['id' => 'email', 'class' => 'form-control mb-2'])
-            ->addButton('Récupérer', ['class' => 'btn btn-secondary'])
+            ->addButton('submit', 'Récupérer', ['class' => 'btn btn-secondary'])
             ->endForm();
         if (isset($_POST["email"]) && (!empty($_POST["email"]))) {
             $emailAddress = strip_tags($_POST['email']);
@@ -209,7 +209,7 @@ class UsersController extends Controller
             ->addInput('password', 'password', ['id' => 'password', 'class' => 'form-control mb-2'])
             ->addLabelFor('password', 'Confirmer le mot de passe')
             ->addInput('password', 'password', ['id' => 'password', 'class' => 'form-control mb-2'])
-            ->addButton('Modifier', ['class' => 'btn btn-secondary'])
+            ->addButton('submit', 'Modifier', ['class' => 'btn btn-secondary'])
             ->endForm()
         ;
         $userModel = new UsersModel;

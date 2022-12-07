@@ -1,0 +1,42 @@
+@startuml connetion admin
+    actor       Admin       as chef
+    boundary    System    as system
+    database    Database    as data
+
+    chef -> system : Requete d'authentification
+    system -> data : consultation de la base de données
+    system <-- data : Résultats trouvés
+    chef <- system : Resultat de la requete
+    chef -> system : écrir un nouvel article
+    system -> data : ajout du nouvel article
+    system <-- data : article ajouté
+    chef <-- system : Renvoi vers le menu des articles
+
+    alt Modifier un article existant
+        chef -> system: Choisir un article existant
+        system -> data: Consultation des articles
+        system <-- data : article trouvé
+        chef <-- system : Visualisation de l'article
+        chef -> system: Choix du plat dans la liste
+        system -> data: Enregistement de l'article existant
+        system <-- data : Enregistemnt effectué
+        chef <-- system : Confirmation de l'enregistrement
+
+        alt Accepter les commentaires
+            chef -> system: Choisir un commentaire
+            system -> data: Consultation des commentaires
+            system <-- data : commentaire trouvé
+            chef <-- system : Visualisation du commentaire
+            chef -> system: Accepter le commentaire
+            system -> data: afficher le commentaire sous l'article
+            system <-- data : commentaire affiché
+            chef <-- system : Confirmation de l'affichage
+        else refuser les commentaires 
+            chef -> system: Refuser le commentaire
+            system -> data: supprimer le commentaire
+            system <-- data : commentaire supprimé
+            chef <-- system : Confirmation de la suppression
+
+        end
+    end
+@enduml

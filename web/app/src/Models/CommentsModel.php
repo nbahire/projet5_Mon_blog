@@ -8,7 +8,7 @@ class CommentsModel extends Model
     protected int $post_id;
     protected string $author;
     protected string $comment;
-    protected $comment_date;
+    protected \DateTime $comment_date;
     protected bool $moderates;
 
     public function __construct()
@@ -29,7 +29,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setId($id): static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -49,7 +49,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setPostId($post_id): static
+    public function setPostId(int $post_id): static
     {
         $this->post_id = $post_id;
 
@@ -89,7 +89,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setComment($comment): static
+    public function setComment(string $comment): static
     {
         $this->comment = $comment;
 
@@ -109,7 +109,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setCommentDate($comment_date): static
+    public function setCommentDate(\DateTime $comment_date): static
     {
         $this->comment_date = $comment_date;
 
@@ -129,7 +129,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setModerates($moderates): static
+    public function setModerates(bool $moderates): static
     {
         $this->moderates = $moderates;
 

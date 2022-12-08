@@ -9,17 +9,17 @@ class Model extends Db
     // Table de la base de données
     protected $table;
     //Instance de Db
-    private $db;
+    private Db $db;
 
     //READ
 
-    public function findAll()
+    public function findAll(): array|bool
     {
         $query = $this->requete('SELECT * FROM ' . $this->table);
         return $query->fetchAll();
     }
 
-    public function findBy(array $criteres)
+    public function findBy(array $criteres): array
     {
         $champs = [];
         $valeurs = [];
@@ -46,7 +46,7 @@ class Model extends Db
 
 
     //CREATE
-    public function create()
+    public function create(): bool|\PDOStatement
     {
         $champs = [];
         $inter = [];
@@ -72,7 +72,7 @@ class Model extends Db
 
     //UPDATE
 
-    public function update()
+    public function update(): bool|\PDOStatement
     {
         $champs = [];
         $valeurs = [];
@@ -96,11 +96,11 @@ class Model extends Db
 
     //DELETE
 
-    public function delete(int $id)
+    public function delete(int $id): bool|\PDOStatement
     {
         return $this->requete("DELETE FROM {$this->table} WHERE id = ?", [$id]);
     }
-    public function requete(string $sql, array $attributs = null)
+    public function requete(string $sql, array $attributs = null): bool|\PDOStatement
     {
         //On recupere l'instance de Db
         $this->db = Db::getInstance();
@@ -118,7 +118,7 @@ class Model extends Db
         }
     }
 
-    public function hydrate($datas)
+    public function hydrate(mixed $datas): static
     {
         foreach ($datas as $key => $value) {
             //On recupere le nom du setter correspondant à la clé(key)

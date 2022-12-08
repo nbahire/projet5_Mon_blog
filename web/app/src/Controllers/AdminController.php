@@ -47,7 +47,6 @@ class AdminController extends Controller
             // On est pas admin
             $_SESSION['erreur'] = "Accès interdit !!";
             header('location: posts');
-            exit;
         }
     }
 
@@ -76,7 +75,7 @@ class AdminController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function modifyChapter($id)
+    public function modifyChapter(int $id)
     {
         if ($this->isAdmin()) {
             $sessionItems = $this->getSession();

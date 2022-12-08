@@ -9,4 +9,5 @@ composer:
 	cd web && composer install
 
 cs-fixer:
-	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/src
+	web/tools/php-cs-fixer/vendor/bin/php-cs-fixer fix web
+

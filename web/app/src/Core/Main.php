@@ -31,7 +31,6 @@ class Main extends Controller
 
             // On redirige vers l'URL dans /
             header('Location: ' . $uri.'?');
-            exit;
         }
         // On sépare les paramètres et on les met dans le tableau $params
         $params = explode('/', $uri);

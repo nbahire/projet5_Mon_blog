@@ -44,7 +44,6 @@ class UsersController extends Controller
             // On est pas admin
             $_SESSION['erreur'] = "Accès interdit !!";
             header('location: /users');
-            exit;
         }
     }
 
@@ -64,7 +63,6 @@ class UsersController extends Controller
                 if (!$userArray) {
                     $_SESSION['erreur'] = " Identifiants incorectes !! ";
                     header('Location: login');
-                    exit;
                 }
                 $user = $userModel->hydrate($userArray);
 
@@ -81,7 +79,6 @@ class UsersController extends Controller
                 } else {
                     $_SESSION['erreur'] = " Identifiants incorectes !! ";
                     header('Location: login');
-                    exit;
                 }
                 $this->twig->display('users/login.html.twig', compact('user'));
             }
@@ -157,7 +154,6 @@ class UsersController extends Controller
                 if (!$user) {
                     $_SESSION['erreur'] = " Email inconnu !! ";
                     header('Location: forgotten');
-                    exit;
                 }
                 // generate token by binaryhexa
                 $token = bin2hex(random_bytes(50));
@@ -213,7 +209,6 @@ class UsersController extends Controller
         $user = $userModel->findByEmail($_SESSION['email']);
         if (!isset($user) && !$_SESSION['token']) {
             header('Location: error');
-            exit;
         }
         if (!empty($_POST['password'])) {
             $email = $user->email;
@@ -239,6 +234,5 @@ class UsersController extends Controller
         unset($_SESSION['user']);
         $_SESSION['success'] = 'vous etes maintenant deconnécté ';
         header('Location: /main');
-        exit;
     }
 }

@@ -7,8 +7,8 @@ class UsersModel extends Model
     protected int $id;
     protected string $name;
     protected string $email;
-    protected $password;
-    protected $roles;
+    protected string $password;
+    protected array $roles;
 
     public function __construct()
     {
@@ -28,8 +28,6 @@ class UsersModel extends Model
 
     /**
      * Crée la session de l'utilisateur
-     *
-     * @return void
      */
     public function setSession(): void
     {
@@ -45,17 +43,15 @@ class UsersModel extends Model
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set the value of id
-     *
-     * @return  self
      */
-    public function setId($id)
+    public function setId($id): static
     {
         $this->id = $id;
 
@@ -72,8 +68,6 @@ class UsersModel extends Model
 
     /**
      * Set the value of email
-     *
-     * @return  self
      */
     public function setEmail($email): static
     {
@@ -85,15 +79,13 @@ class UsersModel extends Model
     /**
      * Get the value of password
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
     /**
      * Set the value of password
-     *
-     * @return  self
      */
     public function setPassword($password): static
     {
@@ -115,8 +107,6 @@ class UsersModel extends Model
 
     /**
      * Set the value of roles
-     *
-     * @return  self
      */
     public function setRoles($roles): static
     {
@@ -135,8 +125,6 @@ class UsersModel extends Model
 
     /**
      * Set the value of name
-     *
-     * @return  self
      */
     public function setName($name): static
     {

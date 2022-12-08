@@ -53,7 +53,6 @@ class PostsController extends Controller
         if (!$post) {
             http_response_code(404);
             header('Location: erreur');
-            exit;
         }
 
         $addComment = null;

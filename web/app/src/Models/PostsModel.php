@@ -8,7 +8,7 @@ class PostsModel extends Model
     protected string $titre;
     protected string $description;
     protected string $contenu;
-    protected $created_at;
+    protected \DateTime $created_at;
 
 
     public function __construct()
@@ -26,10 +26,8 @@ class PostsModel extends Model
 
     /**
      * Set the value of id
-     *
-     * @return  self
      */
-    public function setId($id): static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -46,10 +44,8 @@ class PostsModel extends Model
 
     /**
      * Set the value of titre
-     *
-     * @return  self
      */
-    public function setTitre($titre): static
+    public function setTitre(string $titre): static
     {
         $this->titre = $titre;
 
@@ -66,10 +62,8 @@ class PostsModel extends Model
 
     /**
      * Set the value of description
-     *
-     * @return  self
      */
-    public function setDescription($description): static
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
@@ -80,17 +74,15 @@ class PostsModel extends Model
     /**
      * Get the value of created_at
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
     /**
      * Set the value of created_at
-     *
-     * @return  self
      */
-    public function setCreatedAt($created_at): static
+    public function setCreatedAt(\DateTime $created_at): static
     {
         $this->created_at = $created_at;
 
@@ -107,10 +99,8 @@ class PostsModel extends Model
 
     /**
      * Set the value of contenu
-     *
-     * @return  self
      */
-    public function setContenu($contenu): static
+    public function setContenu(string $contenu): static
     {
         $this->contenu = $contenu;
 

@@ -12,7 +12,7 @@ class Form
      */
     public function create(): string
     {
-    return $this->formCode;
+        return $this->formCode;
     }
     /**
      * Valide si tous les champs proposés sont remplis
@@ -23,9 +23,9 @@ class Form
     public static function validate(array $form, array $fields): bool
     {
         // On parcourt chaque champ
-        foreach($fields as $field){
+        foreach ($fields as $field) {
             // Si le champ est absent ou vide dans le tableau
-            if(!isset($form[$field]) || empty($form[$field])){
+            if (!isset($form[$field]) || empty($form[$field])) {
                 // On sort en retournant false
                 return false;
             }
@@ -47,11 +47,11 @@ class Form
         $courts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus', 'novalidate', 'formnovalidate'];
 
         // On boucle sur le tableau d'attributs
-        foreach($attributs as $attribut => $valeur){
+        foreach ($attributs as $attribut => $valeur) {
             // Si l'attribut est dans la liste des attributs courts
-            if(in_array($attribut, $courts) && $valeur == true){
+            if (in_array($attribut, $courts) && $valeur) {
                 $str .= " $attribut";
-            }else{
+            } else {
                 // On ajoute attribut='valeur'
                 $str .= " $attribut='$valeur'";
             }
@@ -80,7 +80,7 @@ class Form
      * Balise de fermeture du formulaire
      * @return Form
      */
-    public function endForm():self
+    public function endForm(): self
     {
         $this->formCode .= '</form>';
         return $this;
@@ -92,7 +92,7 @@ class Form
      * @param array $attributs
      * @return Form
      */
-    public function addLabelFor(string $for, string $texte, array $attributs = []):self
+    public function addLabelFor(string $for, string $texte, array $attributs = []): self
     {
         // On ouvre la balise
         $this->formCode .= "<label for='$for'";
@@ -112,7 +112,7 @@ class Form
      * @param array $attributs
      * @return Form
      */
-    public function addInput(string $type, string $nom, array $attributs = []):self
+    public function addInput(string $type, string $nom, array $attributs = []): self
     {
         // On ouvre la balise
         $this->formCode .= "<input type='$type' name='$nom'";
@@ -129,7 +129,7 @@ class Form
      * @param array $attributs Attributs
      * @return Form Retourne l'objet
      */
-    public function addTextarea(string $nom, string $valeur = '', array $attributs = []):self
+    public function addTextarea(string $nom, string $valeur = '', array $attributs = []): self
     {
         // On ouvre la balise
         $this->formCode .= "<textarea name='$nom'";
@@ -149,7 +149,7 @@ class Form
      * @param array $attributs
      * @return Form
      */
-    public function addSelect(string $nom, array $options, array $attributs = []):self
+    public function addSelect(string $nom, array $options, array $attributs = []): self
     {
         // On crée le select
         $this->formCode .= "<select name='$nom'";
@@ -158,7 +158,7 @@ class Form
         $this->formCode .= $attributs ? $this->addAttributs($attributs).'>' : '>';
 
         // On ajoute les options
-        foreach($options as $valeur => $texte){
+        foreach ($options as $valeur => $texte) {
             $this->formCode .= "<option value='$valeur'>$texte</option>";
         }
 
@@ -173,7 +173,7 @@ class Form
      * @param array $attributs
      * @return Form
      */
-    public function addButton(string $type, string $texte, array $attributs = []):self
+    public function addButton(string $type, string $texte, array $attributs = []): self
     {
         // On ouvre le bouton
         $this->formCode .= "<button type='$type'";

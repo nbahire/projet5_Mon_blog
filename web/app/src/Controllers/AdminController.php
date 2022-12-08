@@ -25,14 +25,13 @@ class AdminController extends Controller
             $sessionItems= $this->getSession();
 
             //On instancie le modele correspondant à la table 'posts'
-            $postsModel = new PostsModel;
+            $postsModel = new PostsModel();
             $message = $this->getSuccess();
-            //On va chercher tous les posts 
+            //On va chercher tous les posts
             $posts = $postsModel->findBy(['']);
-            //On genere la vue 
-            $this->twig->display('admin/index.html.twig', compact("posts",'sessionItems', 'message'));
+            //On genere la vue
+            $this->twig->display('admin/index.html.twig', compact("posts", 'sessionItems', 'message'));
         }
-
     }
     /**
      * On verfie si on est admin
@@ -57,9 +56,8 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $sessionItems = $this->getSession();
 
-            $postModel = new PostsModel;
+            $postModel = new PostsModel();
             if (!empty($_POST['titre']) && !empty($_POST['description'])) {
-
                 $addChapter = $postModel->setTitre(htmlentities($_POST['titre']))
                     ->setDescription(htmlentities($_POST['description']))
                     ->setContenu($_POST['contenu']);
@@ -67,9 +65,9 @@ class AdminController extends Controller
                 //On envoie a la vue
                 $_SESSION['success'] = 'Article ajouté avec success';
                 header('location: /admin');
-                $this->twig->display('admin/addChapter.html.twig', compact('addChapter','sessionItems'));
+                $this->twig->display('admin/addChapter.html.twig', compact('addChapter', 'sessionItems'));
             }
-            $this->twig->display('admin/addChapter.html.twig',  compact('sessionItems'));
+            $this->twig->display('admin/addChapter.html.twig', compact('sessionItems'));
         }
     }
 
@@ -83,7 +81,7 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $sessionItems = $this->getSession();
             //On instancie le modéle
-            $postsModel = new PostsModel;
+            $postsModel = new PostsModel();
             //On va chercher 1 billet de blog
             $post = $postsModel->find($id);
             if (!empty($_POST['titre']) && !empty($_POST['contenu'])) {
@@ -96,11 +94,10 @@ class AdminController extends Controller
                 $postModif->update();
                 $_SESSION['success'] = 'L\'article a été modifié';
                 header('Location: /posts/read/' . $post->id);
-                $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'postModif','sessionItems'));
+                $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'postModif', 'sessionItems'));
             }
-            $this->twig->display('admin/modifyChapter.html.twig', compact('post','sessionItems'));
+            $this->twig->display('admin/modifyChapter.html.twig', compact('post', 'sessionItems'));
         }
-
     }
     /**
      * Affiche les commentaires signalés
@@ -110,16 +107,15 @@ class AdminController extends Controller
      */
     public function moderateComment(): void
     {
-
         if ($this->isAdmin()) {
             $sessionItems= $this->getSession();
 
-            $commentsModel = new CommentsModel;
+            $commentsModel = new CommentsModel();
 
-            //On va chercher tous les posts 
+            //On va chercher tous les posts
             $moderates = $commentsModel->findBy(['moderates' => 0]);
             try {
-                $this->twig->display('admin/moderateComment.html.twig', compact('moderates','sessionItems'));
+                $this->twig->display('admin/moderateComment.html.twig', compact('moderates', 'sessionItems'));
             } catch (LoaderError|RuntimeError|SyntaxError $e) {
                 echo 'erreur '.$e;
             }
@@ -134,7 +130,7 @@ class AdminController extends Controller
     public function deleteComment(int $id): void
     {
         if ($this->IsAdmin()) {
-            $comment = new CommentsModel;
+            $comment = new CommentsModel();
             $comment->delete($id);
             header('location: ' . $_SERVER['HTTP_REFERER']);
         }
@@ -148,7 +144,7 @@ class AdminController extends Controller
     public function deletePost(int $id): void
     {
         if ($this->IsAdmin()) {
-            $deleteP = new PostsModel;
+            $deleteP = new PostsModel();
             $deleteP->delete($id);
 
             header('location: /posts');
@@ -162,7 +158,7 @@ class AdminController extends Controller
      */
     public function getComment(int $id): void
     {
-        $commentsModel = new CommentsModel;
+        $commentsModel = new CommentsModel();
         $commentaArray = $commentsModel->find($id);
         if ($commentaArray) {
             $comment = $commentsModel->hydrate($commentaArray);
@@ -178,7 +174,7 @@ class AdminController extends Controller
      */
     public function restaure(int $id)
     {
-        $commentsModel = new CommentsModel;
+        $commentsModel = new CommentsModel();
         $commentaArray = $commentsModel->find($id);
         if ($commentaArray) {
             $comment = $commentsModel->hydrate($commentaArray);

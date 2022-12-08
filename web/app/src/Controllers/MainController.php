@@ -23,7 +23,7 @@ class MainController extends Controller
     public function index(): void
     {
         //On instancie le modele correspondant à la table 'posts'
-        $postsModel = new PostsModel;
+        $postsModel = new PostsModel();
         $sessionItems = $this->getSession();
         $message = $this->getSuccess();
 
@@ -67,7 +67,7 @@ class MainController extends Controller
         //On va chercher tous les posts
         $posts = $postsModel->findBy(['']);
         $post = end($posts);
-        $this->twig->display('main/index.html.twig',compact('post','sessionItems', 'message'));
+        $this->twig->display('main/index.html.twig', compact('post', 'sessionItems', 'message'));
     }
 
     /**
@@ -79,6 +79,5 @@ class MainController extends Controller
     {
         $sessionItems= $this->getSession();
         $this->twig->display('main/error.html.twig', compact('sessionItems'));
-
     }
 }

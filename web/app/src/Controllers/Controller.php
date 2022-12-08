@@ -18,7 +18,7 @@ abstract class Controller
         $this->loader = new FilesystemLoader(ROOT.'/app/src/Views');
 
         //Paramétrage de l'environnement Twig
-        $this->twig = new Environment($this->loader,['debug' => true]);
+        $this->twig = new Environment($this->loader, ['debug' => true]);
         $this->twig->addExtension(new DebugExtension());
         $this->twig->addFunction(new TwigFunction('asset', function ($asset) {
             // implement whatever logic you need to determine the asset path

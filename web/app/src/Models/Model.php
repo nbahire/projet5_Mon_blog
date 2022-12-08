@@ -21,7 +21,6 @@ class Model extends Db
 
     public function findBy(array $criteres)
     {
-
         $champs = [];
         $valeurs = [];
 
@@ -49,7 +48,6 @@ class Model extends Db
     //CREATE
     public function create()
     {
-
         $champs = [];
         $inter = [];
         $valeurs = [];
@@ -76,7 +74,6 @@ class Model extends Db
 
     public function update()
     {
-
         $champs = [];
         $valeurs = [];
 

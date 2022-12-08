@@ -4,9 +4,9 @@ namespace App\Acme\Models;
 
 class UsersModel extends Model
 {
-    protected $id;
-    protected $name;
-    protected $email;
+    protected int $id;
+    protected string $name;
+    protected string $email;
     protected $password;
     protected $roles;
 
@@ -21,7 +21,7 @@ class UsersModel extends Model
         return $this->requete("SELECT * FROM {$this->table} WHERE email = ?", [$email])->fetch();
     }
 
-    public function updatePassword(string $email, string $password)
+    public function updatePassword(string $email, string $password): bool|\PDOStatement
     {
         return $this->requete("UPDATE users SET password='$password' WHERE email='$email'");
     }
@@ -65,7 +65,7 @@ class UsersModel extends Model
     /**
      * Get the value of email
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -75,7 +75,7 @@ class UsersModel extends Model
      *
      * @return  self
      */
-    public function setEmail($email)
+    public function setEmail($email): static
     {
         $this->email = $email;
 
@@ -95,7 +95,7 @@ class UsersModel extends Model
      *
      * @return  self
      */
-    public function setPassword($password)
+    public function setPassword($password): static
     {
         $this->password = $password;
 
@@ -118,7 +118,7 @@ class UsersModel extends Model
      *
      * @return  self
      */
-    public function setRoles($roles)
+    public function setRoles($roles): static
     {
         $this->roles = json_decode($roles);
 
@@ -127,8 +127,8 @@ class UsersModel extends Model
 
     /**
      * Get the value of name
-     */ 
-    public function getName()
+     */
+    public function getName(): string
     {
         return $this->name;
     }
@@ -137,8 +137,8 @@ class UsersModel extends Model
      * Set the value of name
      *
      * @return  self
-     */ 
-    public function setName($name)
+     */
+    public function setName($name): static
     {
         $this->name = $name;
 

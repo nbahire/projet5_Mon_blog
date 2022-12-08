@@ -9,16 +9,16 @@ trait SessionTrait
     public function getSession(): array
     {
         $session = '';
-        if(isset($_SESSION['user'] )&& in_array('ROLE_ADMIN',$_SESSION['user']['roles'] )){
+        if (isset($_SESSION['user'])&& in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
             $session = 'admin';
         }
 
-        if(isset($_SESSION['user'] )&& in_array('ROLE_USER',$_SESSION['user']['roles'] )){
+        if (isset($_SESSION['user'])&& in_array('ROLE_USER', $_SESSION['user']['roles'])) {
             $session = 'user';
         }
         return ['session' => $session];
     }
-    public function getSuccess() : ?string
+    public function getSuccess(): ?string
     {
         $message = null;
         if (isset($_SESSION['success'])) {
@@ -28,7 +28,7 @@ trait SessionTrait
         return $message;
     }
 
-    public function getError() : ?string
+    public function getError(): ?string
     {
         $error = null;
         if (isset($_SESSION['error'])) {
@@ -37,5 +37,4 @@ trait SessionTrait
         }
         return $error;
     }
-
 }

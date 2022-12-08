@@ -9,7 +9,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-
 class PostsController extends Controller
 {
     use SessionTrait;
@@ -23,18 +22,17 @@ class PostsController extends Controller
         $sessionItems = $this->getSession();
 
         //On instancie le modele correspondant à la table 'posts'
-        $postsModel = new PostsModel;
+        $postsModel = new PostsModel();
 
-        //On va chercher tous les posts 
+        //On va chercher tous les posts
         $posts = $postsModel->findAll();
         $message = $this->getSuccess();
-        //On genere la vue 
+        //On genere la vue
         try {
-            $this->twig->display('posts/index.html.twig', compact('posts','sessionItems', 'message'));
+            $this->twig->display('posts/index.html.twig', compact('posts', 'sessionItems', 'message'));
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
-
     }
     /**
      * affiche 1 billet de blog
@@ -47,8 +45,8 @@ class PostsController extends Controller
         $sessionItems= $this->getSession();
 
         //On instancie le modéle
-        $postsModel = new PostsModel;
-        $commentsModel = new CommentsModel;
+        $postsModel = new PostsModel();
+        $commentsModel = new CommentsModel();
         //On va chercher 1 billet de blog
 
         $post = $postsModel->find($id);
@@ -62,20 +60,19 @@ class PostsController extends Controller
         if (!empty($_SESSION['user']) && !empty($_POST['comment'])) {
             $user = strip_tags($_SESSION['user']['name']);
             $comment = strip_tags($_POST['comment']);
-            $addComment = $commentsModel->setPost_id($id)
+            $addComment = $commentsModel->setPostId($id)
                 ->setAuthor($user)
                 ->setComment(htmlentities($comment));
             $commentsModel->create();
             $_SESSION['success'] = 'Votre message a été envoyé pour moderation';
             header('Location:'. $_SERVER['HTTP_REFERER']);
-
         }
 
         //On associe le commentaire a son billet de blog correspodant
         $comments = $commentsModel->findBy(['post_id' => $id]);
         $displayComment = [];
         foreach ($comments as $moderatedComment) {
-            if($moderatedComment->moderates === 1){
+            if ($moderatedComment->moderates === 1) {
                 $displayComment[] = $moderatedComment;
             }
         }
@@ -83,12 +80,11 @@ class PostsController extends Controller
         $message = $this->getSuccess();
         try {
             $this->twig->display(
-                'posts/read.html.twig', compact('post', 'addComment', 'moderatedComments', 'sessionItems', 'message')
+                'posts/read.html.twig',
+                compact('post', 'addComment', 'moderatedComments', 'sessionItems', 'message')
             );
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
-
-
     }
 }

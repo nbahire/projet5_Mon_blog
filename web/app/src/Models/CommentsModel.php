@@ -4,23 +4,22 @@ namespace App\Acme\Models;
 
 class CommentsModel extends Model
 {
-    protected $id;
-    protected $post_id;
-    protected $author;
-    protected $comment;
+    protected int $id;
+    protected int $post_id;
+    protected string $author;
+    protected string $comment;
     protected $comment_date;
-    protected $moderates;
+    protected bool $moderates;
 
     public function __construct()
     {
-
         $this->table = 'comments';
     }
 
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -30,7 +29,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setId($id)
+    public function setId($id): static
     {
         $this->id = $id;
 
@@ -40,7 +39,7 @@ class CommentsModel extends Model
     /**
      * Get the value of post_id
      */
-    public function getPost_id()
+    public function getPostId(): int
     {
         return $this->post_id;
     }
@@ -50,7 +49,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setPost_id($post_id)
+    public function setPostId($post_id): static
     {
         $this->post_id = $post_id;
 
@@ -60,7 +59,7 @@ class CommentsModel extends Model
     /**
      * Get the value of author
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -70,7 +69,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setAuthor($author)
+    public function setAuthor($author): static
     {
         $this->author = $author;
 
@@ -80,7 +79,7 @@ class CommentsModel extends Model
     /**
      * Get the value of comment
      */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->comment;
     }
@@ -90,7 +89,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setComment($comment)
+    public function setComment($comment): static
     {
         $this->comment = $comment;
 
@@ -100,7 +99,7 @@ class CommentsModel extends Model
     /**
      * Get the value of comment_date
      */
-    public function getComment_date()
+    public function getCommentDate()
     {
         return $this->comment_date;
     }
@@ -110,7 +109,7 @@ class CommentsModel extends Model
      *
      * @return  self
      */
-    public function setComment_date($comment_date)
+    public function setCommentDate($comment_date): static
     {
         $this->comment_date = $comment_date;
 
@@ -119,8 +118,8 @@ class CommentsModel extends Model
 
     /**
      * Get the value of moderate
-     */ 
-    public function getModerates()
+     */
+    public function getModerates(): bool
     {
         return $this->moderates;
     }
@@ -129,8 +128,8 @@ class CommentsModel extends Model
      * Set the value of moderate
      *
      * @return  self
-     */ 
-    public function setModerates($moderates)
+     */
+    public function setModerates($moderates): static
     {
         $this->moderates = $moderates;
 

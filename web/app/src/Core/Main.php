@@ -20,7 +20,7 @@ class Main extends Controller
         session_start();
         // On récupère l'adresse
         $uri = $_SERVER['REQUEST_URI'];
-        $uri = substr($uri,1);
+        $uri = substr($uri, 1);
         // On vérifie si elle n'est pas vide et si elle se termine par un /
         if (!empty($uri) && $uri !== '/' && $uri[-1] === '/') {
             // Dans ce cas on enlève le /
@@ -37,7 +37,7 @@ class Main extends Controller
         $params = explode('/', $uri);
         // Si au moins 1 paramètre existe
         if ($params[0] !== "") {
-            // On sauvegarde le 1er paramètre dans $controller en mettant sa 1ère lettre en majuscule, 
+            // On sauvegarde le 1er paramètre dans $controller en mettant sa 1ère lettre en majuscule,
             // en ajoutant le namespace des controleurs et en ajoutant "Controller" à la fin
             $controller = '\\App\\Acme\\Controllers\\' . ucfirst(array_shift($params)) . 'Controller';
             // On instancie le contrôleur
@@ -57,12 +57,12 @@ class Main extends Controller
                     (isset($params[0])) ? call_user_func_array([$controller, $action], $params) : $controller->$action();
                 } catch (\Error) {
                     http_response_code(404);
-                    header('Location: /main/error'); 
+                    header('Location: /main/error');
                 }
             } else {
                 // On envoie le code réponse 404
                 http_response_code(404);
-                header('Location: /main/error'); 
+                header('Location: /main/error');
             }
         } else {
             // Ici aucun paramètre n'est défini

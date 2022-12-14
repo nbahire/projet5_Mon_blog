@@ -4,32 +4,29 @@ namespace App\Acme\Models;
 
 class UsersModel extends Model
 {
-    protected $id;
-    protected $name;
-    protected $email;
-    protected $password;
-    protected $roles;
+    protected int $id;
+    protected string $name;
+    protected string $email;
+    protected string $password;
+    protected array $roles;
 
     public function __construct()
     {
-        parent::__construct();
-        $this->table = 'users';
+        parent::__construct('users');
     }
 
-    public function findByEmail(string $email)
+    public function findByEmail(string $email): \PDOStatement
     {
         return $this->requete("SELECT * FROM {$this->table} WHERE email = ?", [$email])->fetch();
     }
 
-    public function updatePassword(string $email, string $password)
+    public function updatePassword(string $email, string $password): bool|\PDOStatement
     {
         return $this->requete("UPDATE users SET password='$password' WHERE email='$email'");
     }
 
     /**
      * Crée la session de l'utilisateur
-     *
-     * @return void
      */
     public function setSession(): void
     {
@@ -45,17 +42,15 @@ class UsersModel extends Model
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set the value of id
-     *
-     * @return  self
      */
-    public function setId($id)
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -65,17 +60,15 @@ class UsersModel extends Model
     /**
      * Get the value of email
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * Set the value of email
-     *
-     * @return  self
      */
-    public function setEmail($email)
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
@@ -85,17 +78,15 @@ class UsersModel extends Model
     /**
      * Get the value of password
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
     /**
      * Set the value of password
-     *
-     * @return  self
      */
-    public function setPassword($password)
+    public function setPassword(string $password): static
     {
         $this->password = $password;
 
@@ -115,10 +106,8 @@ class UsersModel extends Model
 
     /**
      * Set the value of roles
-     *
-     * @return  self
      */
-    public function setRoles($roles)
+    public function setRoles(string $roles): static
     {
         $this->roles = json_decode($roles);
 
@@ -127,18 +116,16 @@ class UsersModel extends Model
 
     /**
      * Get the value of name
-     */ 
-    public function getName()
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Set the value of name
-     *
-     * @return  self
-     */ 
-    public function setName($name)
+     */
+    public function setName(string $name): static
     {
         $this->name = $name;
 

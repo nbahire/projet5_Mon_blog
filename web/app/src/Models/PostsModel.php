@@ -4,33 +4,37 @@ namespace App\Acme\Models;
 
 class PostsModel extends Model
 {
-    protected $id;
-    protected $titre;
-    protected $description;
-    protected $contenu;
-    protected $created_at;
+    protected int $id;
+    protected string $titre;
+    protected string $description;
+    protected string $contenu;
+    protected \DateTime $created_at;
 
 
     public function __construct()
     {
-
-        $this->table = 'posts';
+        parent::__construct('posts');
     }
+    public function findAll(): array|bool
+    {
+        $query = $this->prepare("SELECT * FROM posts");
+        $query->execute();
+        return $query->fetchAll();
+    }
+
 
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set the value of id
-     *
-     * @return  self
      */
-    public function setId($id)
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -40,17 +44,15 @@ class PostsModel extends Model
     /**
      * Get the value of titre
      */
-    public function getTitre()
+    public function getTitre(): string
     {
         return $this->titre;
     }
 
     /**
      * Set the value of titre
-     *
-     * @return  self
      */
-    public function setTitre($titre)
+    public function setTitre(string $titre): static
     {
         $this->titre = $titre;
 
@@ -60,17 +62,15 @@ class PostsModel extends Model
     /**
      * Get the value of description
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
      * Set the value of description
-     *
-     * @return  self
      */
-    public function setDescription($description)
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
@@ -81,17 +81,15 @@ class PostsModel extends Model
     /**
      * Get the value of created_at
      */
-    public function getCreated_at()
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
     /**
      * Set the value of created_at
-     *
-     * @return  self
      */
-    public function setCreated_at($created_at)
+    public function setCreatedAt(\DateTime $created_at): static
     {
         $this->created_at = $created_at;
 
@@ -100,18 +98,16 @@ class PostsModel extends Model
 
     /**
      * Get the value of contenu
-     */ 
-    public function getContenu()
+     */
+    public function getContenu(): string
     {
         return $this->contenu;
     }
 
     /**
      * Set the value of contenu
-     *
-     * @return  self
-     */ 
-    public function setContenu($contenu)
+     */
+    public function setContenu(string $contenu): static
     {
         $this->contenu = $contenu;
 

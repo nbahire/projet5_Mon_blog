@@ -1,6 +1,6 @@
 {
-    "name": "alain/monblog",
     "license": "proprietary",
+    "name": "alain/monblog",
     "description": "Le blog d'Alain le dev",
     "require": {
         "twig/twig": "^3.4",

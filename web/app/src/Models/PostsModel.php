@@ -15,13 +15,13 @@ class PostsModel extends Model
     {
         parent::__construct('posts');
     }
+
     public function findAll(): array|bool
     {
         $query = $this->prepare("SELECT * FROM posts");
         $query->execute();
         return $query->fetchAll();
     }
-
 
     /**
      * Get the value of id

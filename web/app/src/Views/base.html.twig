@@ -37,13 +37,17 @@
                 <div class="site-branding flex flex-column align-items-center">
                     {% block header %}{% endblock %}
                     <div class="container">
-                        </div><!-- .site-branding -->
+                        <div><!-- .site-branding -->
                             {% if message is not null %}
                                 <div class="alert alert-success" role="alert">
                                     {{ message  }}
                                 </div>
                             {% endif %}
-
+                            {% if error is not null %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error  }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div><!-- .col -->
@@ -51,7 +55,7 @@
         </div><!-- .container -->
     </div>
 </header>
-<div class="content">
+<div class="content ">
     {% block content %}{% endblock %}
 </div>
 

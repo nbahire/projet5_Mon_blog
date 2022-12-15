@@ -9,20 +9,11 @@ class CommentsModel extends Model
     protected string $author;
     protected string $comment;
     protected \DateTime $comment_date;
-    protected bool $moderates;
+    protected int $moderates;
 
     public function __construct()
     {
         parent::__construct('comments');
-    }
-
-    public function findByMaderates(int $value): array
-    {
-        return $this->requete(" SELECT * FROM comments WHERE moderates = $value")->fetchAll();
-    }
-    public function findByPostId(int $id): array
-    {
-        return $this->requete(" SELECT * FROM comments WHERE post_id = $id")->fetchAll();
     }
 
     /**
@@ -35,8 +26,6 @@ class CommentsModel extends Model
 
     /**
      * Set the value of id
-     *
-     * @return  self
      */
     public function setId(int $id): static
     {
@@ -52,11 +41,15 @@ class CommentsModel extends Model
     {
         return $this->post_id;
     }
+    public function findAll(): array|bool
+    {
+        $query = $this->prepare("SELECT * FROM comments");
+        $query->execute();
+        return $query->fetchAll();
+    }
 
     /**
      * Set the value of post_id
-     *
-     * @return  self
      */
     public function setPostId(int $post_id): static
     {
@@ -75,8 +68,6 @@ class CommentsModel extends Model
 
     /**
      * Set the value of author
-     *
-     * @return  self
      */
     public function setAuthor(string $author): static
     {
@@ -95,8 +86,6 @@ class CommentsModel extends Model
 
     /**
      * Set the value of comment
-     *
-     * @return  self
      */
     public function setComment(string $comment): static
     {
@@ -115,8 +104,6 @@ class CommentsModel extends Model
 
     /**
      * Set the value of comment_date
-     *
-     * @return  self
      */
     public function setCommentDate(\DateTime $comment_date): static
     {
@@ -128,15 +115,13 @@ class CommentsModel extends Model
     /**
      * Get the value of moderate
      */
-    public function getModerates(): bool
+    public function getModerates(): int
     {
         return $this->moderates;
     }
 
     /**
      * Set the value of moderate
-     *
-     * @return  self
      */
     public function setModerates(bool $moderates): static
     {

@@ -4,8 +4,6 @@ namespace App\Acme\Controllers\Traits;
 
 trait SessionTrait
 {
-    /**
-     */
     public function getSession(): array
     {
         $session = '';

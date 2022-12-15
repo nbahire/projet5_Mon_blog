@@ -26,6 +26,7 @@ class MainController extends Controller
         $postsModel = new PostsModel();
         $sessionItems = $this->getSession();
         $message = $this->getSuccess();
+        $error = $this->getError();
 
         if (
             isset($_POST['email'])
@@ -35,9 +36,15 @@ class MainController extends Controller
             && isset($_POST['subject'])
         ) {
             $emailAddress = strip_tags($_POST['email']);
-            $message = strip_tags($_POST['message']);
+            $emailAddress = $this->testInput($emailAddress);
+            $messages = strip_tags($_POST['message']);
+            $messages = $this->testInput($messages);
+
             $name = strip_tags($_POST['firstname']).' '.strip_tags($_POST['lastname']);
+            $name = $this->testInput($name);
+
             $object = strip_tags($_POST['subject']);
+            $object = $this->testInput($object);
 
             $phpmailer = new PHPMailer();
             $phpmailer->IsSMTP();
@@ -52,7 +59,7 @@ class MainController extends Controller
             $phpmailer->setFrom($emailAddress, $name);
             //On construit le lien
             $subject = $object;
-            $output = $message;
+            $output = $messages;
             $phpmailer->addAddress('email@email.com');
             $phpmailer->Subject = $subject;
             $phpmailer->Body = $output;
@@ -67,7 +74,7 @@ class MainController extends Controller
         //On va chercher tous les posts
         $posts = $postsModel->findAll();
         $post = end($posts);
-        $this->twig->display('main/index.html.twig', compact('post', 'sessionItems', 'message'));
+        $this->twig->display('main/index.html.twig', compact('post', 'sessionItems', 'message', 'error'));
     }
 
     /**
@@ -80,4 +87,10 @@ class MainController extends Controller
         $sessionItems= $this->getSession();
         $this->twig->display('main/error.html.twig', compact('sessionItems'));
     }
+   private function testInput(string $data): string
+   {
+       $data = trim($data);
+       $data = stripslashes($data);
+       return htmlspecialchars($data);
+   }
 }

@@ -17,33 +17,34 @@ abstract class Model extends Db
         $this->table = $table;
     }
 
+    protected function findBy(array $criteres): array
+    {
+        $champs = [];
+        $valeurs = [];
+
+        //On boucle pour éclater le tableau
+        foreach ($criteres as $champ => $valeur) {
+            //SELECT * FROM annonces WHERE actif = ? AND signale = 0
+            // bindValue(1, valeur)
+            $champs[] = "$champ = ?";
+            $valeurs[] = $valeur;
+        }
+
+        //On transforme le tableau champs en une chaine de caractéres
+        $liste_champs = implode(" AND ", $champs);
+
+        //On execute la requete
+        $table = filter_input( INPUT_GET, $this->table);
+        return $this->requete(" SELECT * FROM " . $table . " WHERE " . $liste_champs, $valeurs)->fetchAll();
+    }
+
     public function find(int $id): mixed
     {
         return $this->requete("SELECT * FROM {$this->table} WHERE id = $id")->fetch();
     }
 
+
     //CREATE
-    public function update(): bool|\PDOStatement
-    {
-        $champs = [];
-        $valeurs = [];
-        $self = $this;
-        //On boucle pour éclater le tableau
-        foreach ($self as $champ => $valeur) {
-            //UPDATE  SET titre= ?, description= ?, WHERE id= ?
-            if ($valeur !== null && $champ != "db" && $champ != "table") {
-                $champs[] = "$champ= ?";
-                $valeurs[] = $valeur;
-            }
-        }
-        $valeurs[] = $this->id;
-
-        //On transforme le tableau champs en une chaine de caractéres
-        $liste_champs = implode(', ', $champs);
-        //On execute la requete
-        return $this->requete("UPDATE $this->table SET " . $liste_champs . " WHERE id= ?", $valeurs);
-    }
-
     public function create(): bool|\PDOStatement
     {
         $champs = [];
@@ -67,6 +68,31 @@ abstract class Model extends Db
 
         //On execute la requete
         return $this->requete("INSERT INTO " . $this->table . " (" . $liste_champs . ") VALUES(" . $liste_inter . ")", $valeurs);
+    }
+
+    //UPDATE
+
+    public function update(): bool|\PDOStatement
+    {
+        $champs = [];
+        $valeurs = [];
+        $self = $this;
+
+        //On boucle pour éclater le tableau
+        foreach ($self as $champ => $valeur) {
+            //UPDATE  SET titre= ?, description= ?, WHERE id= ?
+            if ($valeur !== null && $champ != "db" && $champ != "table") {
+                $champs[] = "$champ= ?";
+                $valeurs[] = $valeur;
+            }
+        }
+        $valeurs[] = $this->id;
+
+        //On transforme le tableau champs en une chaine de caractéres
+        $liste_champs = implode(', ', $champs);
+
+        //On execute la requete
+        return $this->requete("UPDATE " . $this->table . " SET " . $liste_champs . " WHERE id= ?", $valeurs);
     }
 
     //DELETE

@@ -14,8 +14,14 @@ class UsersModel extends Model
     {
         parent::__construct('users');
     }
+    public function findAll(): array|bool
+    {
+        $query = $this->prepare("SELECT * FROM users");
+        $query->execute();
+        return $query->fetchAll();
+    }
 
-    public function findByEmail(string $email): \PDOStatement
+    public function findByEmail(string $email): object
     {
         return $this->requete("SELECT * FROM {$this->table} WHERE email = ?", [$email])->fetch();
     }

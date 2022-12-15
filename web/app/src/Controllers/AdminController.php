@@ -33,10 +33,9 @@ class AdminController extends Controller
             $this->twig->display('admin/index.html.twig', compact("posts", 'sessionItems', 'message'));
         }
     }
+
     /**
      * On verfie si on est admin
-     *
-     * @return true
      */
     private function isAdmin(): bool
     {
@@ -47,6 +46,7 @@ class AdminController extends Controller
             // On est pas admin
             $_SESSION['erreur'] = "Accès interdit !!";
             header('location: posts');
+            return false;
         }
     }
 
@@ -112,7 +112,7 @@ class AdminController extends Controller
             $commentsModel = new CommentsModel();
 
             //On va chercher tous les posts
-            $moderates = $commentsModel->findByMaderates( 0);
+            $moderates = $commentsModel->findBy(['moderates' => 0]);
             try {
                 $this->twig->display('admin/moderateComment.html.twig', compact('moderates', 'sessionItems'));
             } catch (LoaderError|RuntimeError|SyntaxError $e) {

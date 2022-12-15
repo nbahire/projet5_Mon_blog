@@ -6,7 +6,7 @@
     chef -> system : Requete d'authentification
     system -> data : consultation de la base de données
     system <-- data : Résultats trouvés
-    chef <- system : Resultat de la requete
+    chef <- system : Authentification reussie
     chef -> system : écrir un nouvel article
     system -> data : ajout du nouvel article
     system <-- data : article ajouté

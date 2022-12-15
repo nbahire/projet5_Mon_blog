@@ -10,7 +10,7 @@ Foo2 --> Foo1 : affichadge de la page à l'utilisateur
 Foo1 -> Foo2 : register(): créer un utilisateur
 Foo2 -> Foo3 : creation de l'utilisateur
 Foo3 -> Foo2 : utilisateur créé
-Foo2 --> Foo1 : vers la page de l'utilisateur
+Foo2 --> Foo1 : vers la page de connexion
 Foo1 -> Foo2 :login(): connection de l'utilisateur
 Foo2 -> Foo3 : recherche de l'utilisateur
 alt utlisateur trouvé

@@ -9,11 +9,10 @@
 
 {% block content %}
     {%  for post  in posts|reverse %}
-        <div class="container single-page">
+        <div class="container single-page mb-5">
             <div class="row">
                 <div class=" col-12 col-lg-12">
-                    <div class="content-wrap">
-
+                    <div class="content-wrap ">
                         <header class="entry-header">
                             <div class="posted-date">
                                 {{ post.created_at }}
@@ -29,12 +28,9 @@
                             <a class="read-more order-2" href="posts/read/{{ post.id }}">lire la suite</a>
                         </footer><!-- .entry-footer -->
                     </div><!-- .content-wrap -->
-
-
                 </div><!-- .col -->
 
             </div><!-- .row -->
         </div><!-- .container -->
     {%  endfor %}
 {% endblock %}
-

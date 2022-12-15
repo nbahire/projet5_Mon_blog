@@ -158,10 +158,6 @@ a:hover, a:active {
     text-align: left;
 }
 
-.single-page .content-wrap .entry-footer {
-    margin-top: 50px;
-}
-
 .post-share,
 .comments-count a {
     color: red;
@@ -354,15 +350,11 @@ a:hover, a:active {
     }
 }
 
-.footer {
+#footer {
     position: absolute;
-    bottom: 0px;
+    bottom: -130px;
+
     width: 100%;
-    text-align: center;
-    color: white;
-    padding: 5px 0 5px 0;
-    background-color: #343A40;
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 #notfound {
     position: relative;

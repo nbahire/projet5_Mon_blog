@@ -27,9 +27,10 @@ class PostsController extends Controller
         //On va chercher tous les posts
         $posts = $postsModel->findAll();
         $message = $this->getSuccess();
+        $error = $this->getError();
         //On genere la vue
         try {
-            $this->twig->display('posts/index.html.twig', compact('posts', 'sessionItems', 'message'));
+            $this->twig->display('posts/index.html.twig', compact('posts', 'sessionItems', 'message', 'error'));
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;
         }
@@ -68,7 +69,7 @@ class PostsController extends Controller
         }
 
         //On associe le commentaire a son billet de blog correspodant
-        $comments = $commentsModel->findByPostId($id);
+        $comments = $commentsModel->findBy(['post_id' => $id]);
         $displayComment = [];
         foreach ($comments as $moderatedComment) {
             if ($moderatedComment->moderates === 1) {
@@ -77,10 +78,12 @@ class PostsController extends Controller
         }
         $moderatedComments = $displayComment;
         $message = $this->getSuccess();
+        $error = $this->getError();
+
         try {
             $this->twig->display(
                 'posts/read.html.twig',
-                compact('post', 'addComment', 'moderatedComments', 'sessionItems', 'message')
+                compact('post', 'addComment', 'moderatedComments', 'sessionItems', 'message', 'error')
             );
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo 'erreur sur '.$e;

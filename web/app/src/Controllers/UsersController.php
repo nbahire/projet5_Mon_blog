@@ -30,8 +30,9 @@ class UsersController extends Controller
                 'email' => $_SESSION['user']['email']
             ];
             $message = $this->getSuccess();
+            $error = $this->getError();
             //On genere la vue
-            $this->twig->display('users/index.html.twig', compact('sessionItems', 'userInfo', 'message'));
+            $this->twig->display('users/index.html.twig', compact('sessionItems', 'userInfo', 'message', 'error'));
         }
     }
 
@@ -44,6 +45,7 @@ class UsersController extends Controller
             // On est pas admin
             $_SESSION['erreur'] = "Accès interdit !!";
             header('location: /users');
+            return false;
         }
     }
 
@@ -83,7 +85,9 @@ class UsersController extends Controller
                 $this->twig->display('users/login.html.twig', compact('user'));
             }
             $message = $this->getSuccess();
-            $this->twig->display('users/login.html.twig', compact('message'));
+            $error = $this->getError();
+
+            $this->twig->display('users/login.html.twig', compact('message', 'error'));
         }
     }
 
@@ -97,11 +101,10 @@ class UsersController extends Controller
         if ($this->isNotUser()) {
             // On instancie le formulaire
             $form = new Form();
-
             // On ajoute chacune des parties qui nous intéressent
             $form->startForm()
                 ->addLabelFor('name', 'Nom')
-                ->addInput('email', 'name', ['id' => 'name', 'class' => 'form-control mb-2'])
+                ->addInput('name', 'name', ['id' => 'name', 'class' => 'form-control mb-2'])
                 ->addLabelFor('email', 'Email')
                 ->addInput('email', 'email', ['id' => 'email', 'class' => 'form-control mb-2'])
                 ->addLabelFor('password', 'Mot de passe')
@@ -115,16 +118,24 @@ class UsersController extends Controller
                 $name = strip_tags($_POST['name']);
                 $email = strip_tags($_POST['email']);
                 $pass = password_hash($_POST['password'], PASSWORD_ARGON2I);
-                $role = 'ROLE_USER';
                 $user = new UsersModel();
+                $users = $user->findAll();
+                foreach ($users as $value){
+                    if ($value->email === $email) {
+                        $_SESSION['error'] = 'Cet email existe déjà veuillez vous connecter!';
+                        header('Location: /users/login');
+                        return;
+                    }
+                }
+
                 $user->setEmail($email)
                     ->setName($name)
-                    ->setRoles($role)
                     ->setPassword($pass);
                 $user->create();
-                $_SESSION['success'] = 'Bienvenue dans le monde du dev '.$_SESSION['user']['name'];
-                header('Location: /users');
+                $_SESSION['success'] = 'Enregistrement effectué avec success. Vous pouvez maintenant vous connecter !';
+                header('Location: /users/login');
             }
+
             $this->twig->display('users/register.html.twig', ['registerForm' => $form->create()]);
         }
     }
@@ -177,7 +188,7 @@ class UsersController extends Controller
                 $subject = "Password Recovery";
                 $output = '<p>Please click on the following link to reset your password.</p>';
                 //replace the site url
-                $output .= '<p><a href="https://localhost:3000/users/reset" target="_blank">https://localhost:3000/users/reset</a></p>';
+                $output .= '<p><a href="https://localhost/users/reset" target="_blank">https://localhost/users/reset</a></p>';
                 $body = $output;
                 $phpmailer->Subject = $subject;
                 $phpmailer->Body = $body;
@@ -214,13 +225,15 @@ class UsersController extends Controller
             $email = $user->email;
             $pass = password_hash($_POST['password'], PASSWORD_ARGON2I);
             $userModel->updatePassword($email, $pass);
-            $_SESSION['success']  = 'Votre mot de passe a été réinitialisation !!';
             unset($_SESSION['token'], $_SESSION['email']);
+            $_SESSION['success']  = 'Votre mot de passe a été réinitialisé avec succés !!';
             header('Location: login');
         }
         try {
             $message = $this->getSuccess();
-            $this->twig->display('users/reset.html.twig', ['resetPassForm' => $form->create(), $user, $message]);
+            $error = $this->getError();
+
+            $this->twig->display('users/reset.html.twig', ['resetPassForm' => $form->create(), $user, $message, $error]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             $_SESSION['erreur'] = 'Erreur '.$e.'!!';
         }
@@ -232,7 +245,7 @@ class UsersController extends Controller
     #[NoReturn] public function logout(): void
     {
         unset($_SESSION['user']);
-        $_SESSION['success'] = 'vous etes maintenant deconnécté ';
+        $_SESSION['success'] = 'Vous etes maintenant deconnécté ';
         header('Location: /main');
     }
 }

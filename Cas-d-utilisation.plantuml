@@ -3,29 +3,15 @@ scale 1
 Left to right direction
 skinparam packageStyle rect
 actor utilisateur
-actor admin
-actor visiteur
 
 rectangle utilisation{
-(admin) -- (ajouter/modifier un article)
-(ajouter/modifier un article) ..> (authentification) :include
-
-(admin) -- (valider/supprimer un commentaire)
-(valider/supprimer un commentaire) ..> (authentification) :include
-
 (utilisateur) -- (ajouter un commentaire)
 (utilisateur) -- (authentification)
-(ajouter un commentaire) ..> (authentification) :include
+(ajouter un commentaire) ..> (authentification)
 
 (utilisateur) -- (utiliser le formulaire de contact)
 (utilisateur) -- (voir la liste des articles)
 (utilisateur) -- (lire un article)
-(utilisateur) -- (reinitialiser mot de passe)
-
-(visiteur) -- (lire un article)
-(visiteur) -- (voir la liste des articles)
-(visiteur) -- (créer un compte)
-(visiteur) -- (utiliser le formulaire de contact)
 
 (authentification) ..> (créer un compte) :extend
 }
